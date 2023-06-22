@@ -1,4 +1,4 @@
-// eventos APi
+// eventos
 export const eventList = document.querySelector('.list-cards');
 export const eventInput = document.querySelector('.search-by-s');
 export const countryInput = document.querySelector('.options');
