@@ -1,26 +1,28 @@
-.footer{
+.footer {
     background-color: black;
     padding: 27px;
-    &__p{
+
+    &__p {
         width: 252px;
         height: 34px;
         margin-left: auto;
         margin-right: auto;
-        
+
         font-weight: 400;
         font-size: 14px;
         line-height: 17.07px;
         text-align: center;
-        
+
         color: #939393;
     }
-}  
+}
 
 
 @media (min-width: 768px) {
-    .footer{
+    .footer {
         background-color: black;
-        &__p{
+
+        &__p {
             padding-left: 35px;
             padding-right: 35px;
             width: 521px;
@@ -28,7 +30,7 @@
             padding-bottom: 15px;
             font-size: 16px;
             line-height: 19.5px;
-            
+
         }
-    }  
+    }
 }

@@ -1,4 +1,50 @@
-.gallery{
-    background-color: black;
-    
+@media (min-width: 320px) {
+    .gallery {
+        background-color: black;
+        width: 100%;
+        //justify-content: center;
+        //display: inline-flex;
+        //flex-wrap: wrap;
+
+        .gbox {
+            width: 100%;
+            margin: o auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(20, 1fr);
+            grid-column-gap: 7px;
+            grid-row-gap: 6px;
+
+            &__img1 {
+                height: 161px;
+                width: 128px;
+                background-repeat: no-repeat;
+                margin-right: 10px;
+                background-image: url(/src/images/gallery1.png);
+            }
+
+            &__img2 {
+                height: 161px;
+                width: 128px;
+                background-repeat: no-repeat;
+                background-image: url(/src/images/gallery2.png);
+            }
+
+            &__img3 {
+                height: 161px;
+                width: 128px;
+                background-repeat: no-repeat;
+                margin-right: 10px;
+                background-image: url(/src/images/gallery3.png);
+            }
+
+            &__img4 {
+                height: 161px;
+                width: 128px;
+                background-repeat: no-repeat;
+                background-image: url(/src/images/gallery4.png);
+            }
+
+        }
+    }
 }
