@@ -11,16 +11,39 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./sass/index.scss" />
-    <script type="module" src="./index.js"></script>
-    <script type="module" src="./Event.js"></script>
   </head>
   <body>
+    <div class="search">
+      <h1 class="search-header">FIND BEST EVENTS AROUND THE WORLD</h1>
+      <div class="search-inputs">
+        <form class="search-form">
+          <input
+            class="search-by-s"
+            type="text"
+            placeholder="Start searching"
+          />
+          <button class="search-by-s-btn" type="submit"></button>
+        </form>
+        <div class="wrapper">
+          <div class="select-btn">
+            <span value="">Choose Country</span>
+          </div>
+          <div class="content">
+            <ul class="options">
+              <li value="nothing" class="countryLi">All countries</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- ❗️❗️❗️ Add partials like so for every page -->
     <include src="./partials/header.html"></include>
     <include src="./partials/footer.html"></include>
 
     <!-- <script type="module" src="js/api.js"></script> -->
-    <script src="/src/js/index.js"></script>
-    <script src="/src/js/Event.js"></script>
+    <script type="module" src="./js/index.js"></script>
+    <script type="module" src="./js/country.js"></script>
+    <script type="module" src="./js/Event.js"></script>
+    <script type="module" src="./index.html"></script>
   </body>
 </html>

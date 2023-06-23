@@ -1,12 +1,11 @@
 // eventos
-export const eventList = document.querySelector('.list-cards');
-export const eventInput = document.querySelector('.search-by-s');
-export const countryInput = document.querySelector('.options');
-export const searchForm = document.querySelector('.search-form');
+const eventInput = document.querySelector('.search-by-s');
+const countryInput = document.querySelector('.options');
+const searchForm = document.querySelector('.search-form');
 
 const changeTheme = document.querySelector('.thema-mode');
 
-export async function fetchEvents(api) {
+async function fetchEvents(api) {
   try {
     const response = await fetch(api);
     const events = await response.json();
@@ -16,7 +15,7 @@ export async function fetchEvents(api) {
   }
 }
 
-export function renderEvents(events) {
+function renderEvents(events) {
   let ramkaClass = '';
   let eventNameClass = '';
   let eventDateClass = '';
