@@ -3,6 +3,7 @@
     background: rgba(11, 11, 11, 0.5);
     background-image: url('/src/images/Header_mobile.png');
     background-repeat: no-repeat;
+    background-position: center;
     background-size:cover ;
 
     &__h1{
@@ -51,5 +52,25 @@
         position: absolute;
         left: 228px;
         top: 14px;
+    }
+}
+
+@media (min-width: 321px) and (max-width: 768px){
+    .header {
+        background-image: url("/src/images/header_tablet.png");
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1280px){
+    .header{
+        max-height: 446px;
+        background-image: url("/src/images/header_desk.png");
+    }
+}
+@media (min-width: 1281px){
+    .header{
+        background-size: contain;
+        min-height: 500px;
+        background-image: url("/src/images/header_desk.png");
     }
 }
