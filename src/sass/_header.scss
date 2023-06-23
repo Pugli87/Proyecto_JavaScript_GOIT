@@ -1,0 +1,55 @@
+.header{
+    height: 364px;
+    background: rgba(11, 11, 11, 0.5);
+    background-image: url('/src/images/Header_mobile.png');
+    background-repeat: no-repeat;
+    background-size:cover ;
+
+    &__h1{
+        margin-left: auto;
+        margin-right: auto;
+        width: 212px;
+        height: 44px;
+
+        font-weight: 900;
+        font-size: 18px;
+        line-height: 22px;
+        text-align: center;
+        font-weight: bold;
+
+        color: #DC56C5;
+    }
+
+    &__cont{
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__btn{
+        cursor: pointer;
+        text-align: left;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 25px;
+        padding-left: 30px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        width: 270px;
+        height: 40px;
+        border-radius: 20px;
+
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        /* identical to box height */
+
+        color: #b9b9b9;
+    }
+
+    &__svg{
+        position: absolute;
+        left: 228px;
+        top: 14px;
+    }
+}
