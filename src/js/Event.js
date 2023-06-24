@@ -1,9 +1,10 @@
 // eventos
+const eventList = document.querySelector('.list-cards');
 const eventInput = document.querySelector('.search-by-s');
 const countryInput = document.querySelector('.options');
 const searchForm = document.querySelector('.search-form');
 
-const changeTheme = document.querySelector('.thema-mode');
+//const changeTheme = document.querySelector('.thema-mode');
 
 async function fetchEvents(api) {
   try {

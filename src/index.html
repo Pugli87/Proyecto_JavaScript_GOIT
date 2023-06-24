@@ -13,29 +13,59 @@
     <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body>
-    <div class="search">
-      <h1 class="search-header">FIND BEST EVENTS AROUND THE WORLD</h1>
-      <div class="search-inputs">
-        <form class="search-form">
-          <input
-            class="search-by-s"
-            type="text"
-            placeholder="Start searching"
-          />
-          <button class="search-by-s-btn" type="submit"></button>
-        </form>
-        <div class="wrapper">
-          <div class="select-btn">
-            <span value="">Choose Country</span>
-          </div>
-          <div class="content">
-            <ul class="options">
-              <li value="nothing" class="countryLi">All countries</li>
-            </ul>
+    <div class="mask">
+      <div class="loader"></div>
+    </div>
+    <header>
+      <div class="header_thema_and_logo">
+        <div class="logo-container">
+          <svg class="svg-logo">
+            <use href="../sprite.svg#icon-logo"></use>
+          </svg>
+        </div>
+      </div>
+      <div class="search">
+        <h1 class="search-header">FIND BEST EVENTS AROUND THE WORLD</h1>
+        <div class="search-inputs">
+          <form class="search-form">
+            <input
+              class="search-by-s"
+              type="text"
+              placeholder="Start searching"
+            />
+            <button class="search-by-s-btn" type="submit">
+              <svg class="icon icon-search">
+                <use href="../sprite.svg#icon-search_icon"></use>
+              </svg>
+            </button>
+          </form>
+          <div class="wrapper">
+            <div class="select-btn">
+              <span value="">Choose Country</span>
+              <svg class="icon icon-select-country">
+                <use href="../sprite.svg#icon-select"></use>
+              </svg>
+            </div>
+            <div class="content">
+              <div class="search-form-country">
+                <input
+                  class="search-country"
+                  spellcheck="false"
+                  type="text"
+                  placeholder="Search"
+                />
+                <svg class="icon icon-search-country">
+                  <use href="../sprite.svg#icon-search_icon"></use>
+                </svg>
+              </div>
+              <ul class="options">
+                <li value="nothing" class="countryLi">All countries</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </header>
     <!-- ❗️❗️❗️ Add partials like so for every page -->
     <include src="./partials/header.html"></include>
     <include src="./partials/footer.html"></include>

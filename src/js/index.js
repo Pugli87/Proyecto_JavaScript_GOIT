@@ -1,10 +1,10 @@
-console.log('cv');
 import Notiflix from 'notiflix';
 import * as EventJS from './Event.js';
+import * as loaderJS from './loader.js';
 import * as countrySearhJS from './country.js';
 
 eventsApi
-  .getByKey('keyWord') // en keyWord colocamos la palabra del evento q queremos buscar
+  .getByKey('API_KEY') // en keyWord colocamos la palabra del evento q queremos buscar
   .then(result => {
     // Hacer algo con el resultado de la búsqueda
     console.log(result);
@@ -25,7 +25,7 @@ Notiflix.Notify.init({
     fontFamily: 'Montserrat',
   },
 });
-//------------- country select ---------------
+//            country select
 countrySearhJS
   .fetchCountries('https://restcountries.com/v3.1/all')
   .then(data => {
@@ -57,4 +57,12 @@ countrySearhJS.countrySelect.addEventListener('click', event => {
         event.target.innerText;
     }
   });
+});
+
+//             loader
+window.addEventListener('load', () => {
+  loaderJS.mask.classList.add('hide');
+  setTimeout(() => {
+    loaderJS.mask.remove();
+  }, 1000);
 });

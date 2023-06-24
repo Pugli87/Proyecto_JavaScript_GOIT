@@ -1,76 +1,284 @@
-.header{
-    height: 364px;
-    background: rgba(11, 11, 11, 0.5);
-    background-image: url('/src/images/Header_mobile.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size:cover ;
+.header {
+  width: 100%;
+  min-height: 364px;
+  background: rgba(11, 11, 11, 0.5);
+  background-image: url('/src/images/Header_mobile.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
 
-    &__h1{
-        margin-left: auto;
-        margin-right: auto;
-        width: 212px;
-        height: 44px;
+  &__cont {
+    display: flex;
+    flex-direction: column;
+  }
 
-        font-weight: 900;
-        font-size: 18px;
-        line-height: 22px;
-        text-align: center;
-        font-weight: bold;
+  &__wrapper {
+    &--2 {
+      margin-top: -28px;
+    }
+  }
 
-        color: #DC56C5;
+  &__h1 {
+    margin-left: auto;
+    margin-right: auto;
+    width: 212px;
+    height: 44px;
+
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    font-weight: bold;
+
+    color: #dc56c5;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+
+    &:not(:last-child) {
+      margin-top: 25px;
     }
 
-    &__cont{
-        display: flex;
-        flex-direction: column;
+    &__cont {
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    &__btn{
-        cursor: pointer;
-        text-align: left;
-        position: relative;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 25px;
-        padding-left: 30px;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        width: 270px;
+    &__input {
+      width: 270px;
+      height: 40px;
+      padding-left: 30px;
+      margin-bottom: 25px;
+
+      cursor: pointer;
+      border-radius: 25px;
+
+      font-size: 16px;
+      text-align: left;
+      font-weight: 400;
+      line-height: 20px;
+
+      color: #dad9d9;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.2);
+
+      &::placeholder {
         height: 40px;
-        border-radius: 20px;
-
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 20px;
-        /* identical to box height */
-
-        color: #b9b9b9;
+        color: #c7c6c6;
+      }
     }
 
-    &__svg{
-        position: absolute;
-        left: 228px;
-        top: 14px;
+    &__btn {
+      cursor: pointer;
+      border: none;
+      padding: 10px;
+      position: absolute;
+      width: 30px;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-80%);
+
+      background: rgba(255, 255, 255, 0);
     }
+
+    &__svg {
+      fill: #c7c6c6;
+    }
+  }
 }
 
-@media (min-width: 321px) and (max-width: 768px){
-    .header {
-        background-image: url("/src/images/header_tablet.png");
+@media (min-width: 768px) {
+  .header {
+    margin: 0;
+    width: 100%;
+    background-image: url('/src/images/header_tablet.png');
+
+    &__cont {
+      display: flex;
     }
+
+    &__wrapper {
+      &--2 {
+        margin-top: -68px;
+      }
+    }
+
+    &__logo {
+      scale: 170%;
+      margin-top: 30px;
+      margin-left: 5%;
+    }
+
+    &__h1 {
+      margin-top: 0;
+      scale: 160%;
+      margin-bottom: 5%;
+    }
+
+    .form {
+      flex-direction: row;
+      justify-content: center;
+
+      &:not(:last-child) {
+        margin-top: 27px;
+      }
+
+      &__cont {
+        margin: 0;
+        &:not(:last-child) {
+          margin-right: 30px;
+        }
+      }
+    }
+  }
 }
 
-@media (min-width: 769px) and (max-width: 1280px){
-    .header{
-        max-height: 446px;
-        background-image: url("/src/images/header_desk.png");
+@media (min-width: 1280px) {
+  .header {
+    width: 100%;
+    height: 446px;
+    background-image: url('/src/images/header_desk.png');
+
+    &__cont {
     }
+
+    &__wrapper {
+      &--2 {
+        margin-top: -60px;
+      }
+    }
+    &__logo {
+      scale: 200%;
+      margin-left: 5%;
+      margin-top: 40px;
+    }
+
+    &__h1 {
+      scale: 260%;
+      margin-bottom: 5%;
+    }
+
+    .form {
+      flex-direction: row;
+      justify-content: center;
+
+      &:not(:last-child) {
+        margin-top: 52px;
+      }
+
+      &__cont {
+        margin: 0;
+        &:not(:last-child) {
+          margin-right: 30px;
+        }
+      }
+    }
+  }
 }
-@media (min-width: 1281px){
-    .header{
-        background-size: contain;
-        min-height: 500px;
-        background-image: url("/src/images/header_desk.png");
-    }
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  @media screen and (min-width: 768px) {
+    position: relative;
+    bottom: 80px;
+  }
+}
+
+.search-inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 100px;
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    gap: 30px;
+  }
+  @media screen and (min-width: 1200px) {
+    // margin-top: 45px;
+  }
+}
+
+.logo-container {
+  width: 115px;
+  height: 95px;
+  background-color: #000;
+  border-radius: 0 0 305px 0;
+  background: linear-gradient(
+    136.07deg,
+    rgba(196, 196, 196, 0.03) 10.75%,
+    rgba(196, 196, 196, 0) 92.33%
+  );
+  backdrop-filter: blur(15px);
+  @media screen and (min-width: 768px) {
+    width: 190px;
+    height: 175px;
+  }
+  @media screen and (min-width: 1200px) {
+    width: 220px;
+    height: 200px;
+  }
+}
+.svg-logo {
+  position: relative;
+  right: 100px;
+  bottom: 15px;
+  height: 120px;
+  fill: #fff;
+  @media screen and (min-width: 768px) {
+    right: 70px;
+    bottom: 25px;
+    height: 200px;
+  }
+  @media screen and (min-width: 1200px) {
+    height: 240px;
+    right: 55px;
+  }
+}
+.header_thema_and_logo {
+  display: flex;
+  justify-content: space-between;
+}
+.thema {
+  width: 50px;
+  height: 50px;
+}
+.page-theme {
+  width: 50px;
+  height: 50px;
+  background-color: inherit;
+  border: 0;
+  margin-top: 40px;
+  margin-left: -40px;
+}
+.search-header {
+  font-family: 'Montserrat';
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 22px;
+  text-align: center;
+  width: 212px;
+  color: #dc56c5;
+  margin-bottom: 25px;
+  @media screen and (min-width: 480px) {
+    font-size: 25px;
+    width: 300px;
+    line-height: 30px;
+  }
+  @media screen and (min-width: 768px) {
+    font-size: 30px;
+    width: 353px;
+    line-height: 37px;
+  }
+  @media screen and (min-width: 1200px) {
+    font-size: 50px;
+    width: 600px;
+    line-height: 61px;
+  }
 }

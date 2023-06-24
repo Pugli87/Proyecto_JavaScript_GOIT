@@ -1,4 +1,5 @@
 const countrySelect = document.querySelector('.options');
+const wrapper = document.querySelector('.wrapper');
 const selectBtn = document.querySelector('.select-btn');
 const searchInp = document.querySelector('.search-country');
 const countryList = document.querySelectorAll('.countryLi');
@@ -14,7 +15,6 @@ async function fetchCountries(api) {
 }
 
 function renderCountries(countries) {
-  // const filterCountries = countries.filter(country => country > 15);
   countries.forEach(country => {
     countrySelect.insertAdjacentHTML(
       'beforeend',
