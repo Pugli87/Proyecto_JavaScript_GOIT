@@ -1,12 +1,15 @@
-.header{
+.header {
+    width: 100%;
     height: 364px;
     background: rgba(11, 11, 11, 0.5);
     background-image: url('/src/images/Header_mobile.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size:cover ;
+    background-size: cover;
 
-    &__h1{
+
+
+    &__h1 {
         margin-left: auto;
         margin-right: auto;
         width: 212px;
@@ -21,12 +24,12 @@
         color: #DC56C5;
     }
 
-    &__cont{
+    &__cont {
         display: flex;
         flex-direction: column;
     }
 
-    &__btn{
+    &__btn {
         cursor: pointer;
         text-align: left;
         position: relative;
@@ -48,29 +51,82 @@
         color: #b9b9b9;
     }
 
-    &__svg{
+    &__svg {
         position: absolute;
         left: 228px;
         top: 14px;
     }
 }
 
-@media (min-width: 321px) and (max-width: 768px){
+@media (min-width: 320px) and (max-width: 767px) {
     .header {
-        background-image: url("/src/images/header_tablet.png");
+        background-image: url("/src/images/Header_mobile.png");
+
+
+        &__h1 {
+            margin-top: -6%;
+            scale: 110%;
+            margin-bottom: 3%;
+        }
+
     }
 }
 
-@media (min-width: 769px) and (max-width: 1280px){
-    .header{
-        max-height: 446px;
-        background-image: url("/src/images/header_desk.png");
+@media (min-width: 768px) and (max-width: 1280px) {
+    .header {
+        width: 100%;
+        height: 364px;
+        background-image: url("/src/images/header_tablet.png");
+        background-position: center;
+
+        &__logo {
+            scale: 170%;
+            margin-left: 5%;
+            margin-top: 2%;
+        }
+
+        &__h1 {
+            margin-top: -5.5%;
+            scale: 160%;
+            margin-bottom: 5%;
+        }
+
+        &__cont {
+            display: table;
+            margin: 0 auto;
+        }
+
+        &__btn {
+            margin-right: 30px;
+        }
     }
 }
-@media (min-width: 1281px){
-    .header{
-        background-size: contain;
-        min-height: 500px;
+
+@media (min-width: 1281px) {
+    .header {
+        width: 100%;
+        height: 446px;
         background-image: url("/src/images/header_desk.png");
+
+        &__logo {
+            scale: 200%;
+            margin-left: 5%;
+            margin-top: 2%;
+        }
+
+        &__h1 {
+            margin-top: -2%;
+            scale: 260%;
+            margin-bottom: 5%;
+        }
+
+        &__cont {
+            display: table;
+            margin: 0 auto;
+        }
+
+        &__btn {
+            margin-right: 30px;
+        }
     }
 }
