@@ -1,5 +1,5 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
-
+*,
 ::after,
 ::before {
     margin: 0;
@@ -9,6 +9,13 @@
 }
 
 body{
+    background-color: black;
     font-family: 'Montserrat';
     min-width: 320px;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
 }
