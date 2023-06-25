@@ -33,6 +33,11 @@ function handleInputChange(event) {
 
 import eventsApi from '../js/eventsApi';
 
+/*====================================================================================*/
+/*ejemplos de evento de api*/
+/*====================================================================================*/
+
+/*
 eventsApi
   .getByKey('keyword') // en keyWord colocamos la palabra del evento q queremos buscar
   .then(result => {
@@ -42,7 +47,7 @@ eventsApi
   .catch(error => {
     // Manejar cualquier error que ocurra
     console.error(error);
-  });
+  });*/
 
 // --------------------------------------------------------------------------------------//
 
