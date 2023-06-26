@@ -1,12 +1,12 @@
 const countrySelect = document.querySelector('.options');
-const wrapper = document.querySelector('.wrapper');
+const wrapper = document.querySelector('.form__cont');
 const selectBtn = document.querySelector('.select-btn');
-const searchInp = document.querySelector('.search-country');
+const searchInp = document.querySelector('.form__input');
 const countryList = document.querySelectorAll('.countryLi');
 
-async function fetchCountries(api) {
+async function fetchCountries(BASE_URL) {
   try {
-    const response = await fetch(api);
+    const response = await fetch(BASE_URL);
     const countries = await response.json();
     return countries;
   } catch (error) {
