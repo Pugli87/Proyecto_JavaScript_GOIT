@@ -1,4 +1,3 @@
-//const API_KEY = 'ANBH06wQWJqNnsrzLRgMmHkDjkygmPyZ'; // el key de alona
 const API_KEY = 'xtboiYIsAyoQG85vMxNOToDrUrhqLhlf';
 const BASE_URL = 'https://app.ticketmaster.com/discovery/v2/';
 
