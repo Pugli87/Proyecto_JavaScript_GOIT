@@ -155,7 +155,7 @@ function loadData(keyword) {
     .getByKey(keyword)
     .then(result => {
       result;
-      console.log(result._embedded.events);
+      console.log(result._embedded.venues[1].country.name);
       data = result._embedded.events;
 
       data.map(item => {
@@ -186,8 +186,104 @@ function loadData(keyword) {
     });
 }
 
-startBtn.addEventListener('click', event => {
+startBtn.addEventListener('click', () => {
   loadData(document.querySelector('#search').value);
   // const resultado = document.querySelector('.resultado');
   // resultado.textContent = `Te gusta el sabor ${event.target.value}`;
+});
+
+// country selector
+chooseBtn.addEventListener('click', () => {
+  // loadcountry(document.getElementById('choose').value);
+  console.log(choose);
+  const infocity = document.getElementById(choose).value;
+  console.log(infocity.value);
+  eventsApi
+    .getByCountry(country) // en keyWord colocamos la palabra del evento q queremos buscar
+
+    .then(result => {
+      // Hacer algo con el resultado de la búsqueda
+      console.log(result);
+    })
+    .catch(error => {
+      // Manejar cualquier error que ocurra
+      console.error(error);
+    });
+  // const resultado = document.querySelector('.resultado');
+  // resultado.textContent = `Te gusta el sabor ${event.target.value}`;
+});
+// --------------------------------PAGINACION--------------------
+function addStyle() {
+  const paginationButtons = document.querySelectorAll('.pag-but');
+  paginationButtons.forEach(button => {
+    button.style.backgroundColor = 'blue';
+    button.style.color = 'white';
+  });
+}
+const paginationBox = document.querySelector('.pagination');
+
+eventsJS.searchForm.addEventListener('submit', e => {
+  e.preventDefault();
+  eventsJS.eventList.replaceChildren('');
+  paginationBox.replaceChildren('');
+
+  eventsJS
+    .fetchEvents(
+      `https://app.ticketmaster.com/discovery/v2/events.json?apikey=Thqn5txrZvBNrP2vPhyOGtn3h4ymZ92S&keyword=${
+        eventsJS.eventInput.value
+      }&size=200&countryCode=${countrySearhJS.selectBtn.firstElementChild.getAttribute(
+        'value'
+      )}`
+    )
+    .then(data => {
+      console.log(data['page']['totalElements']);
+
+      if (data['page']['totalElements'] === 0) {
+        Notiflix.Notify.failure(
+          'Sorry, there are no events matching your search query. Please try again.'
+        );
+      }
+      const events = data['_embedded']['events'];
+      const eventsPerPage = 20; // Кількість подій на сторінці
+      const totalPages = Math.ceil(events.length / eventsPerPage); // Загальна кількість сторінок
+      let currentPage = 1; // Початкова сторінка
+
+      // Функція для рендерингу подій на поточній сторінці
+      function renderPage(page) {
+        eventsJS.eventList.replaceChildren('');
+        const startIndex = (page - 1) * eventsPerPage;
+        const endIndex = page * eventsPerPage;
+        const eventsToRender = events.slice(startIndex, endIndex);
+        eventsJS.renderEvents(eventsToRender);
+        addStyle();
+      }
+
+      // Функція для відображення посторінкової навігації
+      function renderPagination() {
+        // Створення кнопок для кожної сторінки
+        for (let i = 1; i <= totalPages; i += 1) {
+          const button = document.createElement('button');
+          button.textContent = i;
+          button.addEventListener('click', () => {
+            currentPage = i;
+            renderPage(currentPage);
+          });
+          paginationBox.appendChild(button);
+          button.classList.add('pag-but');
+
+          const changeTheme = document.querySelector('.thema-mode');
+          let pageButClass = '';
+
+          if (changeTheme.classList.contains('light-mode')) {
+            pageButClass = 'pag-but-blue';
+            button.classList.add(pageButClass);
+            console.log(pageButClass);
+          }
+          addStyle();
+        }
+      }
+
+      renderPage(currentPage);
+      renderPagination();
+    });
 });
