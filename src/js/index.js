@@ -249,14 +249,6 @@ eventsApi.searchForm.addEventListener('submit', e => {
           paginationBox.appendChild(button);
           button.classList.add('pag-but');
 
-          const changeTheme = document.querySelector('.thema-mode');
-          let pageButClass = '';
-
-          if (changeTheme.classList.contains('light-mode')) {
-            pageButClass = 'pag-but-blue';
-            button.classList.add(pageButClass);
-            console.log(pageButClass);
-          }
           addStyle();
         }
       }
