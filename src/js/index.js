@@ -186,11 +186,11 @@ function loadData(keyword) {
     });
 }
 
-startBtn.addEventListener('click', event => {
-  loadData(document.querySelector('#search').value);
-  // const resultado = document.querySelector('.resultado');
-  // resultado.textContent = `Te gusta el sabor ${event.target.value}`;
-});
+//startBtn.addEventListener('click', event => {
+//loadData(document.querySelector('#search').value);
+// const resultado = document.querySelector('.resultado');
+// resultado.textContent = `Te gusta el sabor ${event.target.value}`;
+//});
 // --------------------------------PAGINACION--------------------
 function addStyle() {
   // esta funcion agrega estilos a la paginacion
@@ -203,57 +203,50 @@ function addStyle() {
 const paginationBox = document.querySelector('.pagination');
 
 // //Se agrega un evento de escucha al formulario de búsqueda para realizar una acción cuando se envíe el formulario.
-eventsApi.searchForm.addEventListener('submit', e => {
+form.addEventListener('submit', e => {
   e.preventDefault(); //evitar que el formulario se envíe y se recargue la página
-  eventsApi.eventList.replaceChildren('');
+  //eventsApi.eventList.replaceChildren('');
   paginationBox.replaceChildren(''); //Se eliminan todos los hijos del elemento
+  console.log('submit');
 
-  eventsApi
-    .fetchEvents(
-      `https://app.ticketmaster.com/discovery/v2/events.json?apikey=Thqn5txrZvBNrP2vPhyOGtn3h4ymZ92S&keyword=${
-        eventsApi.eventInput.value
-      }&size=200&countryCode=${countrySearhJS.selectBtn.firstElementChild.getAttribute(
-        'value'
-      )}`
-    )
-    .then(data => {
-      console.log(data['page']['totalElements']); //Imprime en la consola el número total de elementos
+  eventsApi.getByKey(document.querySelector('#search').value).then(data => {
+    console.log(data['page']['totalElements']); //Imprime en la consola el número total de elementos
 
-      if (data['page']['totalElements'] === 0) {
-        Notiflix.Notify.failure(
-          'Sorry, there are no events matching your search query. Please try again.'
-        );
-      }
-      const events = data['_embedded']['events'];
-      const eventsPerPage = 20; // Se establece la cantidad de eventos por página en 20
-      const totalPages = Math.ceil(events.length / eventsPerPage); // Se calcula el número total de páginas dividiendo la cantidad total de eventos entre la cantidad de eventos por página y redondeando hacia arriba.
-      let currentPage = 1; // Se establece la página actual en 1.
-      //renderizar los eventos de la página actual
-      function renderPage(page) {
-        eventsApi.eventList.replaceChildren('');
-        const startIndex = (page - 1) * eventsPerPage;
-        const endIndex = page * eventsPerPage;
-        const eventsToRender = events.slice(startIndex, endIndex);
-        eventsApi.renderEvents(eventsToRender);
+    if (data['page']['totalElements'] === 0) {
+      Notiflix.Notify.failure(
+        'Sorry, there are no events matching your search query. Please try again.'
+      );
+    }
+    const events = data['_embedded']['events'];
+    const eventsPerPage = 20; // Se establece la cantidad de eventos por página en 20
+    const totalPages = Math.ceil(events.length / eventsPerPage); // Se calcula el número total de páginas dividiendo la cantidad total de eventos entre la cantidad de eventos por página y redondeando hacia arriba.
+    let currentPage = 1; // Se establece la página actual en 1.
+    //renderizar los eventos de la página actual
+    function renderPage(page) {
+      //eventsApi.eventList.replaceChildren('');
+      const startIndex = (page - 1) * eventsPerPage;
+      const endIndex = page * eventsPerPage;
+      const eventsToRender = events.slice(startIndex, endIndex);
+      // eventsApi.renderEvents(eventsToRender);
+      addStyle();
+    }
+
+    function renderPagination() {
+      for (let i = 1; i <= totalPages; i += 1) {
+        const button = document.createElement('button');
+        button.textContent = i;
+        button.addEventListener('click', () => {
+          currentPage = i;
+          renderPage(currentPage);
+        });
+        paginationBox.appendChild(button);
+        button.classList.add('pag-but');
+
         addStyle();
       }
+    }
 
-      function renderPagination() {
-        for (let i = 1; i <= totalPages; i += 1) {
-          const button = document.createElement('button');
-          button.textContent = i;
-          button.addEventListener('click', () => {
-            currentPage = i;
-            renderPage(currentPage);
-          });
-          paginationBox.appendChild(button);
-          button.classList.add('pag-but');
-
-          addStyle();
-        }
-      }
-
-      renderPage(currentPage);
-      renderPagination();
-    });
+    renderPage(currentPage);
+    renderPagination();
+  });
 });
