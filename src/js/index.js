@@ -1,5 +1,4 @@
-import eventsApi from './eventsApi';
-import Notiflix from 'notiflix';
+import eventsApi from '../js/eventsApi';
 // hago una referencia al elemento del formulario y al campo de entrada
 const form = document.getElementById('search-form');
 const input = form.querySelector('input');
@@ -156,8 +155,8 @@ function loadData(keyword) {
     .getByKey(keyword)
     .then(result => {
       result;
-      console.log(result._embedded.venues[1].country.name);
-      const data = result._embedded.events;
+      console.log(result._embedded.events);
+      data = result._embedded.events;
 
       data.map(item => {
         document.getElementById('gallery').innerHTML += `
@@ -175,7 +174,7 @@ function loadData(keyword) {
             item._embedded.venues[0] &&
             item._embedded.venues[0].city
               ? item._embedded.venues[0].city.name
-              : ''
+              : null
           }
           </span> <br/>
         </li>
@@ -183,32 +182,12 @@ function loadData(keyword) {
       });
     })
     .catch(error => {
-      console.log('Error:', error);
+      console.error(error);
     });
 }
 
-document.getElementById('startBtn').addEventListener('click', function () {
-  const keyword = document.getElementById('search').value;
-  loadData(keyword);
-});
-
-// country selector
-chooseBtn.addEventListener('click', () => {
-  // loadcountry(document.getElementById('choose').value);
-  console.log(choose);
-  const infocity = document.getElementById(choose).value;
-  console.log(infocity.value);
-  eventsApi
-    .getByCountry(country) // en keyWord colocamos la palabra del evento q queremos buscar
-
-    .then(result => {
-      // Hacer algo con el resultado de la búsqueda
-      console.log(result);
-    })
-    .catch(error => {
-      // Manejar cualquier error que ocurra
-      console.error(error);
-    });
+startBtn.addEventListener('click', event => {
+  loadData(document.querySelector('#search').value);
   // const resultado = document.querySelector('.resultado');
   // resultado.textContent = `Te gusta el sabor ${event.target.value}`;
 });
