@@ -1,4 +1,5 @@
 import eventsApi from './eventsApi';
+import Notiflix from 'notiflix';
 // hago una referencia al elemento del formulario y al campo de entrada
 const form = document.getElementById('search-form');
 const input = form.querySelector('input');
@@ -213,6 +214,7 @@ chooseBtn.addEventListener('click', () => {
 });
 // --------------------------------PAGINACION--------------------
 function addStyle() {
+  // esta funcion agrega estilos a la paginacion
   const paginationButtons = document.querySelectorAll('.pag-but');
   paginationButtons.forEach(button => {
     button.style.backgroundColor = 'blue';
@@ -221,21 +223,22 @@ function addStyle() {
 }
 const paginationBox = document.querySelector('.pagination');
 
+// //Se agrega un evento de escucha al formulario de búsqueda para realizar una acción cuando se envíe el formulario.
 eventsApi.searchForm.addEventListener('submit', e => {
-  e.preventDefault();
+  e.preventDefault(); //evitar que el formulario se envíe y se recargue la página
   eventsApi.eventList.replaceChildren('');
-  paginationBox.replaceChildren('');
+  paginationBox.replaceChildren(''); //Se eliminan todos los hijos del elemento
 
-  eventsJS
+  eventsApi
     .fetchEvents(
       `https://app.ticketmaster.com/discovery/v2/events.json?apikey=Thqn5txrZvBNrP2vPhyOGtn3h4ymZ92S&keyword=${
-        eventsJS.eventInput.value
+        eventsApi.eventInput.value
       }&size=200&countryCode=${countrySearhJS.selectBtn.firstElementChild.getAttribute(
         'value'
       )}`
     )
     .then(data => {
-      console.log(data['page']['totalElements']);
+      console.log(data['page']['totalElements']); //Imprime en la consola el número total de elementos
 
       if (data['page']['totalElements'] === 0) {
         Notiflix.Notify.failure(
@@ -243,10 +246,10 @@ eventsApi.searchForm.addEventListener('submit', e => {
         );
       }
       const events = data['_embedded']['events'];
-      const eventsPerPage = 20; // Кількість подій на сторінці
-      const totalPages = Math.ceil(events.length / eventsPerPage); // Загальна кількість сторінок
-      let currentPage = 1; // Початкова сторінка
-
+      const eventsPerPage = 20; // Se establece la cantidad de eventos por página en 20
+      const totalPages = Math.ceil(events.length / eventsPerPage); // Se calcula el número total de páginas dividiendo la cantidad total de eventos entre la cantidad de eventos por página y redondeando hacia arriba.
+      let currentPage = 1; // Se establece la página actual en 1.
+      //renderizar los eventos de la página actual
       function renderPage(page) {
         eventsApi.eventList.replaceChildren('');
         const startIndex = (page - 1) * eventsPerPage;
