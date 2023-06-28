@@ -1,4 +1,4 @@
-import eventsApi from '../js/eventsApi';
+import eventsApi from './eventsApi';
 // hago una referencia al elemento del formulario y al campo de entrada
 const form = document.getElementById('search-form');
 const input = form.querySelector('input');
@@ -156,7 +156,7 @@ function loadData(keyword) {
     .then(result => {
       result;
       console.log(result._embedded.venues[1].country.name);
-      data = result._embedded.events;
+      const data = result._embedded.events;
 
       data.map(item => {
         document.getElementById('gallery').innerHTML += `
@@ -174,7 +174,7 @@ function loadData(keyword) {
             item._embedded.venues[0] &&
             item._embedded.venues[0].city
               ? item._embedded.venues[0].city.name
-              : null
+              : ''
           }
           </span> <br/>
         </li>
@@ -182,14 +182,13 @@ function loadData(keyword) {
       });
     })
     .catch(error => {
-      console.error(error);
+      console.log('Error:', error);
     });
 }
 
-startBtn.addEventListener('click', () => {
-  loadData(document.querySelector('#search').value);
-  // const resultado = document.querySelector('.resultado');
-  // resultado.textContent = `Te gusta el sabor ${event.target.value}`;
+document.getElementById('startBtn').addEventListener('click', function () {
+  const keyword = document.getElementById('search').value;
+  loadData(keyword);
 });
 
 // country selector
@@ -222,9 +221,9 @@ function addStyle() {
 }
 const paginationBox = document.querySelector('.pagination');
 
-eventsJS.searchForm.addEventListener('submit', e => {
+eventsApi.searchForm.addEventListener('submit', e => {
   e.preventDefault();
-  eventsJS.eventList.replaceChildren('');
+  eventsApi.eventList.replaceChildren('');
   paginationBox.replaceChildren('');
 
   eventsJS
@@ -248,19 +247,16 @@ eventsJS.searchForm.addEventListener('submit', e => {
       const totalPages = Math.ceil(events.length / eventsPerPage); // Загальна кількість сторінок
       let currentPage = 1; // Початкова сторінка
 
-      // Функція для рендерингу подій на поточній сторінці
       function renderPage(page) {
-        eventsJS.eventList.replaceChildren('');
+        eventsApi.eventList.replaceChildren('');
         const startIndex = (page - 1) * eventsPerPage;
         const endIndex = page * eventsPerPage;
         const eventsToRender = events.slice(startIndex, endIndex);
-        eventsJS.renderEvents(eventsToRender);
+        eventsApi.renderEvents(eventsToRender);
         addStyle();
       }
 
-      // Функція для відображення посторінкової навігації
       function renderPagination() {
-        // Створення кнопок для кожної сторінки
         for (let i = 1; i <= totalPages; i += 1) {
           const button = document.createElement('button');
           button.textContent = i;
