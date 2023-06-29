@@ -7,7 +7,12 @@ const chooseBtn = document.getElementById('choose-btn');
 const chooseInput = document.getElementById('choose');//eliminar contenido
 const searchInput = document.getElementById('search');//eliminar contenido
 
+
+
 let data = [];
+
+const countryCode = document.querySelector('#choose').value; // Código del país que deseas buscar
+const pageNumber = 2; // Número de página que deseas obtener
 
 /*====================================================================================*/
 /*------------------------ CARGAMOS MAS IMAGENES CO9N SCROLL -------------------------*/
@@ -172,9 +177,11 @@ function loadCountry(countryCode) {
   eventsApi
     .getByCountry(countryCode)
     .then(result => {
-      result;
+     /*  result;
       console.log(result._embedded.events);
-      data = result._embedded.events;
+      data = result._embedded.events;(modif. para mostrar no eventons en tu area) */
+      if (result._embedded && result._embedded.events.length > 0) {
+        const data = result._embedded.events;
       data.map(item => {
         document.getElementById('gallery').innerHTML += `
         <li class="gallery__item">
@@ -197,17 +204,38 @@ function loadCountry(countryCode) {
         </li>
         `;
       });
+    }else{
+      alert('No hay eventos en tu área.');
+    }
     })
     .catch(error => {
       console.error(error);
     });
 }
-chooseBtn.addEventListener('click', () => {
+/* validacion */
+function validaForm() {
   const chooseValue = chooseInput.value;
-  loadCountry(chooseValue);
-  chooseInput.value = ''; // eliminar contenido
+  const searchValue = searchInput.value;
+
+  if (chooseValue.trim() === '' || searchValue.trim() === '') {
+    alert('Por favor, completa todos los campos del formulario.');
+    return false;
+  }
+
+  return true;
+}
+
+chooseBtn.addEventListener('click', () => {
+  if (validaForm()) {
+    const chooseValue = chooseInput.value;
+    loadCountry(chooseValue);
+    chooseInput.value = ''; // eliminar contenido
+  }
 });
 startBtn.addEventListener('click', event => {
-  loadData(document.querySelector('#search').value);
-  searchInput.value = ''; //eliminar contenido
+  if (validaForm()) {
+    const searchValue = searchInput.value;
+    loadData(searchValue);
+    searchInput.value = ''; //eliminar contenido
+  }
 });
