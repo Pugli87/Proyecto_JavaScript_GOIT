@@ -4,6 +4,8 @@ const form = document.getElementById('search-form');
 //const input = form.querySelector('input');
 const startBtn = document.getElementById('start-btn');
 const chooseBtn = document.getElementById('choose-btn');
+const chooseInput = document.getElementById('choose');
+const searchInput = document.getElementById('search');
 
 let data = [];
 
@@ -203,11 +205,30 @@ function loadCountry(countryCode) {
       console.error(error);
     });
 }
+/* validacion */
+function validaForm() {
+  const chooseValue = chooseInput.value;
+  const searchValue = searchInput.value;
+
+  if (chooseValue.trim() === '' || searchValue.trim() === '') {
+    alert('Por favor, completa todos los campos del formulario.');
+    return false;
+  }
+
+  return true;
+}
+
 chooseBtn.addEventListener('click', () => {
-  const chooseValue = document.querySelector('#choose').value;
-  console.log('Pugliese', chooseValue);
-  loadCountry(chooseValue);
+  if (validaForm()) {
+    const chooseValue = chooseInput.value;
+    loadCountry(chooseValue);
+    chooseInput.value = ''; // eliminar contenido
+  }
 });
 startBtn.addEventListener('click', event => {
-  loadData(document.querySelector('#search').value);
+  if (validaForm()) {
+    const searchValue = searchInput.value;
+    loadData(searchValue);
+    searchInput.value = ''; //eliminar contenido
+  }
 });
