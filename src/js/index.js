@@ -7,12 +7,7 @@ const chooseBtn = document.getElementById('choose-btn');
 const chooseInput = document.getElementById('choose');//eliminar contenido
 const searchInput = document.getElementById('search');//eliminar contenido
 
-
-
 let data = [];
-
-const countryCode = document.querySelector('#choose').value; // Código del país que deseas buscar
-const pageNumber = 2; // Número de página que deseas obtener
 
 /*====================================================================================*/
 /*------------------------ CARGAMOS MAS IMAGENES CO9N SCROLL -------------------------*/
@@ -209,11 +204,10 @@ function loadCountry(countryCode) {
 }
 chooseBtn.addEventListener('click', () => {
   const chooseValue = chooseInput.value;
-  console.log('Pugliese', chooseValue);
   loadCountry(chooseValue);
   chooseInput.value = ''; // eliminar contenido
 });
 startBtn.addEventListener('click', event => {
   loadData(document.querySelector('#search').value);
-  searchInput.value = ''; //eliminar contenido 
+  searchInput.value = ''; //eliminar contenido
 });
