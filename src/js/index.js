@@ -207,13 +207,30 @@ function loadCountry(countryCode) {
       console.error(error);
     });
 }
-chooseBtn.addEventListener('click', () => {
+/* validacion */
+function validaForm() {
   const chooseValue = chooseInput.value;
-  console.log('Pugliese', chooseValue);
-  loadCountry(chooseValue);
-  chooseInput.value = ''; // eliminar contenido
+  const searchValue = searchInput.value;
+
+  if (chooseValue.trim() === '' || searchValue.trim() === '') {
+    alert('Por favor, completa todos los campos del formulario.');
+    return false;
+  }
+
+  return true;
+}
+
+chooseBtn.addEventListener('click', () => {
+  if (validaForm()) {
+    const chooseValue = chooseInput.value;
+    loadCountry(chooseValue);
+    chooseInput.value = ''; // eliminar contenido
+  }
 });
 startBtn.addEventListener('click', event => {
-  loadData(document.querySelector('#search').value);
-  searchInput.value = ''; //eliminar contenido 
+  if (validaForm()) {
+    const searchValue = searchInput.value;
+    loadData(searchValue);
+    searchInput.value = ''; //eliminar contenido
+  }
 });
