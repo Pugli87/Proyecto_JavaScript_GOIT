@@ -200,7 +200,7 @@ form.addEventListener('submit', e => {
     const eventsPerPage = 16; // Se establece la cantidad de eventos por página en 20
     const totalPages = data.page.totalPages;
     console.log('cantidad paginas', totalPages); // Se calcula el número total de páginas dividiendo la cantidad total de eventos entre la cantidad de eventos por página y redondeando hacia arriba.
-    let currentPage = 1; // Se establece la página actual en 1.
+    currentPage = 1; // Se establece la página actual en 1.
     //renderizar los eventos de la página actual
     function renderPage(page) {
       const startIndex = (page - 1) * eventsPerPage;
