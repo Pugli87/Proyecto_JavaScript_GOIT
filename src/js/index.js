@@ -224,7 +224,7 @@ const paginationBox = document.querySelector('.pagination');
 // //Se agrega un evento de escucha al formulario de búsqueda para realizar una acción cuando se envíe el formulario.
 form.addEventListener('submit', e => {
   e.preventDefault(); //evitar que el formulario se envíe y se recargue la página
-  eventsApi.eventList.replaceChildren('');
+  // eventsApi.eventList.replaceChildren('');
   paginationBox.replaceChildren(''); //Se eliminan todos los hijos del elemento
   console.log('submit');
   eventsApi.getByKey(document.querySelector('#search').value).then(data => {
@@ -241,11 +241,11 @@ form.addEventListener('submit', e => {
     let currentPage = 1; // Se establece la página actual en 1.
     //renderizar los eventos de la página actual
     function renderPage(page) {
-      eventsApi.eventList.replaceChildren('');
+      // eventsApi.eventList.replaceChildren('');
       const startIndex = (page - 1) * eventsPerPage;
       const endIndex = page * eventsPerPage;
       const eventsToRender = events.slice(startIndex, endIndex);
-      eventsApi.renderEvents(eventsToRender);
+      // eventsApi.renderEvents(eventsToRender);
       addStyle();
     }
 
