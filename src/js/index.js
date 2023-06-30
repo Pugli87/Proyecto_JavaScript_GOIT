@@ -172,6 +172,7 @@ startBtn.addEventListener('click', event => {
 });
 // --------------------------------PAGINACION--------------------
 function addStyle() {
+  console.log();
   // esta funcion agrega estilos a la paginacion
   const paginationButtons = document.querySelectorAll('.pag-but');
   paginationButtons.forEach(button => {
@@ -211,7 +212,7 @@ form.addEventListener('submit', e => {
     console.log(data.page.totalPages);
 
     function renderPagination() {
-      for (let i = 1; i <= totalPages; i += 1) {
+      for (let i = 1; i <= 10; i += 1) {
         const page = document.createElement('button');
         page.textContent = i;
         page.addEventListener('click', () => {
