@@ -191,45 +191,51 @@ form.addEventListener('submit', e => {
   searchInput = document.getElementById('search');
 
   eventsApi.getByKey(document.getElementById('search').value).then(data => {
-    console.log(data['page']['totalElements']);
-    // Imprime en la consola el número total de elementos
-    console.log(data.page.totalPages);
-    if (data['page']['totalElements'] === 0) {
-      Notiflix.Notify.failure(
-        'Sorry, there are no events matching your search query. Please try again.'
-      );
-    }
-    const events = data['_embedded']['events'];
-    const eventsPerPage = 16; // Se establece la cantidad de eventos por página en 20
-    const totalPages = data.page.totalPages;
-    console.log('cantidad paginas', totalPages); // Se calcula el número total de páginas dividiendo la cantidad total de eventos entre la cantidad de eventos por página y redondeando hacia arriba.
-    let currentPage = 1; // Se establece la página actual en 1.
-    // renderizar los eventos de la página actual
-    function renderPage(page) {
-      const startIndex = (page - 1) * eventsPerPage;
-      const endIndex = page * eventsPerPage;
-      const eventsToRender = events.slice(startIndex, endIndex);
-      addStyle();
-    }
-    console.log(data.page.totalPages);
+    if (data && data.page && data.page.totalElements) {
+      console.log(data.page.totalElements);
+      console.log(data.page.totalPages);
 
-    function renderPagination() {
-      for (let i = 1; i <= 10; i += 1) {
-        const page = document.createElement('button');
-        page.textContent = i;
-        page.addEventListener('click', () => {
-          currentPage = i;
-          renderPage(currentPage);
-        });
+      if (data.page.totalElements === 0) {
+        Notiflix.Notify.failure(
+          'Sorry, there are no events matching your search query. Please try again.'
+        );
+      }
 
-        paginationBox.appendChild(page);
-        page.classList.add('pag-but');
-
+      const events = data['_embedded']['events'];
+      const eventsPerPage = 16; // Se establece la cantidad de eventos por página en 20
+      const totalPages = data.page.totalPages;
+      console.log('cantidad paginas', totalPages); // Se calcula el número total de páginas dividiendo la cantidad total de eventos entre la cantidad de eventos por página y redondeando hacia arriba.
+      let currentPage = 1; // Se establece la página actual en 1.
+      // renderizar los eventos de la página actual
+      function renderPage(page) {
+        const startIndex = (page - 1) * eventsPerPage;
+        const endIndex = page * eventsPerPage;
+        const eventsToRender = events.slice(startIndex, endIndex);
         addStyle();
       }
-    }
+      console.log(data.page.totalPages);
 
-    renderPage(currentPage);
-    renderPagination();
+      function renderPagination() {
+        for (let i = 1; i <= 10; i += 1) {
+          const page = document.createElement('button');
+          page.textContent = i;
+          page.addEventListener('click', () => {
+            currentPage = i;
+            renderPage(currentPage); // Actualizar la galería con los eventos de la página actual
+            window.scrollTo(0, 0); // Desplazarse al principio de la página después de cambiar de página
+          });
+
+          paginationBox.appendChild(page);
+          page.classList.add('pag-but');
+
+          addStyle();
+        }
+      }
+
+      renderPage(currentPage);
+      renderPagination();
+    } else {
+      console.log('No se encontró la propiedad totalElements en data.page');
+    }
   });
 });
