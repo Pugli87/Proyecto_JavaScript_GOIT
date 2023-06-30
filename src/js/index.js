@@ -100,21 +100,21 @@ function loadData(keyword) {
 }
 
 /* --------------------------------------------------------------------------------------*/
-/* -------------------le hago pruebas a eventos llamdos por country ---------------------*/ 
-  /* --------------------------------------------------------------------------------------*/
+/* -------------------le hago pruebas a eventos llamdos por country ---------------------*/
+/* --------------------------------------------------------------------------------------*/
 
-  function loadCountry(countryCode) {
-    document.getElementById('gallery').innerHTML = '';
-    eventsApi
-      .getByCountry(countryCode)
-      .then(result => {
-        /*  result;
+function loadCountry(countryCode) {
+  document.getElementById('gallery').innerHTML = '';
+  eventsApi
+    .getByCountry(countryCode)
+    .then(result => {
+      /*  result;
       console.log(result._embedded.events);
       data = result._embedded.events;(modif. para mostrar no eventons en tu area) */
-        if (result._embedded && result._embedded.events.length > 0) {
-          const data = result._embedded.events;
-          data.map(item => {
-            document.getElementById('gallery').innerHTML += `
+      if (result._embedded && result._embedded.events.length > 0) {
+        const data = result._embedded.events;
+        data.map(item => {
+          document.getElementById('gallery').innerHTML += `
         <li class="gallery__item">
           <img class="gallery__img" src="${item.images[4].url}"> <br/>
           <span class="gallery__name">${item.name}</span> <br/>
@@ -134,16 +134,15 @@ function loadData(keyword) {
           </span> <br/>
         </li>
         `;
-          });
-        } else {
-          alert('No hay eventos en tu área.');
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-);
+        });
+      } else {
+        alert('No hay eventos en tu área.');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
 /* validacion */
 function validaForm() {
   const chooseValue = chooseInput.value;
@@ -181,17 +180,19 @@ function addStyle() {
     button.style.color = 'white';
   });
 }
+
 const paginationBox = document.querySelector('.pagination');
-// //Se agrega un evento de escucha al formulario de búsqueda para realizar una acción cuando se envíe el formulario.
+
+// Se agrega un evento de escucha al formulario de búsqueda para realizar una acción cuando se envíe el formulario.
 form.addEventListener('submit', e => {
-  e.preventDefault(); //evitar que el formulario se envíe y se recargue la página
-  paginationBox.replaceChildren(''); //Se eliminan todos los hijos del elemento
+  e.preventDefault(); // evitar que el formulario se envíe y se recargue la página
+  paginationBox.replaceChildren(''); // Se eliminan todos los hijos del elemento
   console.log('submit');
   searchInput = document.getElementById('search');
 
   eventsApi.getByKey(document.getElementById('search').value).then(data => {
     console.log(data['page']['totalElements']);
-    //Imprime en la consola el número total de elementos
+    // Imprime en la consola el número total de elementos
     console.log(data.page.totalPages);
     if (data['page']['totalElements'] === 0) {
       Notiflix.Notify.failure(
@@ -202,8 +203,8 @@ form.addEventListener('submit', e => {
     const eventsPerPage = 16; // Se establece la cantidad de eventos por página en 20
     const totalPages = data.page.totalPages;
     console.log('cantidad paginas', totalPages); // Se calcula el número total de páginas dividiendo la cantidad total de eventos entre la cantidad de eventos por página y redondeando hacia arriba.
-    currentPage = 1; // Se establece la página actual en 1.
-    //renderizar los eventos de la página actual
+    let currentPage = 1; // Se establece la página actual en 1.
+    // renderizar los eventos de la página actual
     function renderPage(page) {
       const startIndex = (page - 1) * eventsPerPage;
       const endIndex = page * eventsPerPage;
@@ -227,17 +228,7 @@ form.addEventListener('submit', e => {
         addStyle();
       }
     }
-    renderPage(currentPage);
-    renderPagination();
-  });
-});
 
-        paginationBox.appendChild(page);
-        page.classList.add('pag-but');
-
-        addStyle();
-      }
-    }
     renderPage(currentPage);
     renderPagination();
   });
