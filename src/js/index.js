@@ -231,3 +231,14 @@ form.addEventListener('submit', e => {
     renderPagination();
   });
 });
+
+        paginationBox.appendChild(page);
+        page.classList.add('pag-but');
+
+        addStyle();
+      }
+    }
+    renderPage(currentPage);
+    renderPagination();
+  });
+});
