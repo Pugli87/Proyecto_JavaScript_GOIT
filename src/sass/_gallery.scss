@@ -1,6 +1,7 @@
 .gallery {
     background-color: rgba(0, 0, 0, 0);
-    width: 280px;
+    width: 80%;
+    /* modf a donde estan las imgs */
     margin-left: auto;
     margin-right: auto;
 
@@ -73,5 +74,43 @@
         color: white;
         font-size: 12px;
         text-transform: uppercase;
+    }
+}
+
+/* agregue estilos a tablet y desktop (mobile se modifico solo el espacio entre imagenes) */
+@media (min-width: 320px) {
+    .gallery {
+        &__img {
+            width: 129px;
+            margin: 0 auto;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .gallery {
+        &__item {
+            flex-basis: calc((100% - 8px)/3);
+        }
+
+        &__img {
+            width: 180px;
+            height: 227px;
+            margin: 0 auto;
+        }
+    }
+}
+
+@media (min-width: 1280px) {
+    .gallery {
+        &__item {
+            flex-basis: calc((100% - 12px)/4);
+        }
+
+        &__img {
+            width: 194px;
+            height: 250px;
+            margin: 0 auto;
+        }
     }
 }
