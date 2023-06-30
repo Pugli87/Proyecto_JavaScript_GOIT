@@ -100,21 +100,21 @@ function loadData(keyword) {
 }
 
 /* --------------------------------------------------------------------------------------*/
-/* -------------------le hago pruebas a eventos llamdos por country ---------------------*/
-/* --------------------------------------------------------------------------------------*/
+/* -------------------le hago pruebas a eventos llamdos por country ---------------------*/ -(
+  /* --------------------------------------------------------------------------------------*/
 
-function loadCountry(countryCode) {
-  document.getElementById('gallery').innerHTML = '';
-  eventsApi
-    .getByCountry(countryCode)
-    .then(result => {
-      /*  result;
+  function loadCountry(countryCode) {
+    document.getElementById('gallery').innerHTML = '';
+    eventsApi
+      .getByCountry(countryCode)
+      .then(result => {
+        /*  result;
       console.log(result._embedded.events);
       data = result._embedded.events;(modif. para mostrar no eventons en tu area) */
-      if (result._embedded && result._embedded.events.length > 0) {
-        const data = result._embedded.events;
-        data.map(item => {
-          document.getElementById('gallery').innerHTML += `
+        if (result._embedded && result._embedded.events.length > 0) {
+          const data = result._embedded.events;
+          data.map(item => {
+            document.getElementById('gallery').innerHTML += `
         <li class="gallery__item">
           <img class="gallery__img" src="${item.images[4].url}"> <br/>
           <span class="gallery__name">${item.name}</span> <br/>
@@ -134,15 +134,16 @@ function loadCountry(countryCode) {
           </span> <br/>
         </li>
         `;
-        });
-      } else {
-        alert('No hay eventos en tu área.');
-      }
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
+          });
+        } else {
+          alert('No hay eventos en tu área.');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+);
 /* validacion */
 function validaForm() {
   const chooseValue = chooseInput.value;
