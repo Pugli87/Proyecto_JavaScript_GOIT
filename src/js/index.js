@@ -4,41 +4,39 @@ const form = document.getElementById('search-form');
 //const input = form.querySelector('input');
 const startBtn = document.getElementById('start-btn');
 const chooseBtn = document.getElementById('choose-btn');
-const chooseInput = document.getElementById('choose');//eliminar contenido
-const searchInput = document.getElementById('search');//eliminar contenido
-
-
+let chooseInput = document.getElementById('choose'); //eliminar contenido
+let searchInput = document.getElementById('search'); //eliminar contenido
 
 let data = [];
 
 const countryCode = document.querySelector('#choose').value; // Código del país que deseas buscar
-let currentPage = 0; 
+let currentPage = 0;
 
 /* --------------------------------------------------------------------------------------*/
 /* --- En esta parte se hace el primer cargado de elementos para mostar en la pagina ----*/
 /* --------------------------------------------------------------------------------------*/
 function LoadRandom() {
   eventsApi
-  .getRandom()
-  .then(result => {
-    const data = result._embedded.events;
-    const gallery = document.getElementById('gallery');
-    gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
-    data.forEach(item => {
-      const imageUrl =
-        item.images && item.images[4] && item.images[4].url
-          ? item.images[4].url
-          : '';
-      const venueCity =
-        item._embedded &&
-        item._embedded.venues &&
-        item._embedded.venues[0] &&
-        item._embedded.venues[0].city
-          ? item._embedded.venues[0].city.name
-          : '';
-      const listItem = document.createElement('li');
-      listItem.classList.add('gallery__item');
-      listItem.innerHTML = `
+    .getRandom()
+    .then(result => {
+      const data = result._embedded.events;
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
+      data.forEach(item => {
+        const imageUrl =
+          item.images && item.images[4] && item.images[4].url
+            ? item.images[4].url
+            : '';
+        const venueCity =
+          item._embedded &&
+          item._embedded.venues &&
+          item._embedded.venues[0] &&
+          item._embedded.venues[0].city
+            ? item._embedded.venues[0].city.name
+            : '';
+        const listItem = document.createElement('li');
+        listItem.classList.add('gallery__item');
+        listItem.innerHTML = `
         <a href="" class="gallery__link">
           <img class="gallery__img" src="${imageUrl}" alt=""> <br/>
         </a>
@@ -51,13 +49,13 @@ function LoadRandom() {
           ${venueCity}
         </span> <br/>
       `;
-      gallery.appendChild(listItem);
+        gallery.appendChild(listItem);
+      });
+      console.log(data);
+    })
+    .catch(error => {
+      console.log(error);
     });
-    console.log(data);
-  })
-  .catch(error => {
-    console.log(error);
-  });
 }
 LoadRandom(currentPage);
 
@@ -115,8 +113,8 @@ function loadCountry(countryCode) {
       data = result._embedded.events;(modif. para mostrar no eventons en tu area) */
       if (result._embedded && result._embedded.events.length > 0) {
         const data = result._embedded.events;
-      data.map(item => {
-        document.getElementById('gallery').innerHTML += `
+        data.map(item => {
+          document.getElementById('gallery').innerHTML += `
         <li class="gallery__item">
           <img class="gallery__img" src="${item.images[4].url}"> <br/>
           <span class="gallery__name">${item.name}</span> <br/>
@@ -136,8 +134,8 @@ function loadCountry(countryCode) {
           </span> <br/>
         </li>
         `;
-      });
-      }else{
+        });
+      } else {
         alert('No hay eventos en tu área.');
       }
     })
@@ -171,4 +169,63 @@ startBtn.addEventListener('click', event => {
     loadData(searchValue);
     searchInput.value = ''; //eliminar contenido
   }
+});
+// --------------------------------PAGINACION--------------------
+function addStyle() {
+  // esta funcion agrega estilos a la paginacion
+  const paginationButtons = document.querySelectorAll('.pag-but');
+  paginationButtons.forEach(button => {
+    button.style.backgroundColor = 'blue';
+    button.style.color = 'white';
+  });
+}
+const paginationBox = document.querySelector('.pagination');
+// //Se agrega un evento de escucha al formulario de búsqueda para realizar una acción cuando se envíe el formulario.
+form.addEventListener('submit', e => {
+  e.preventDefault(); //evitar que el formulario se envíe y se recargue la página
+  paginationBox.replaceChildren(''); //Se eliminan todos los hijos del elemento
+  console.log('submit');
+  searchInput = document.getElementById('search');
+
+  eventsApi.getByKey(document.getElementById('search').value).then(data => {
+    console.log(data['page']['totalElements']);
+    //Imprime en la consola el número total de elementos
+    console.log(data.page.totalPages);
+    if (data['page']['totalElements'] === 0) {
+      Notiflix.Notify.failure(
+        'Sorry, there are no events matching your search query. Please try again.'
+      );
+    }
+    const events = data['_embedded']['events'];
+    const eventsPerPage = 16; // Se establece la cantidad de eventos por página en 20
+    const totalPages = data.page.totalPages;
+    console.log('cantidad paginas', totalPages); // Se calcula el número total de páginas dividiendo la cantidad total de eventos entre la cantidad de eventos por página y redondeando hacia arriba.
+    let currentPage = 1; // Se establece la página actual en 1.
+    //renderizar los eventos de la página actual
+    function renderPage(page) {
+      const startIndex = (page - 1) * eventsPerPage;
+      const endIndex = page * eventsPerPage;
+      const eventsToRender = events.slice(startIndex, endIndex);
+      addStyle();
+    }
+    console.log(data.page.totalPages);
+
+    function renderPagination() {
+      for (let i = 1; i <= totalPages; i += 1) {
+        const page = document.createElement('button');
+        page.textContent = i;
+        page.addEventListener('click', () => {
+          currentPage = i;
+          renderPage(currentPage);
+        });
+
+        paginationBox.appendChild(page);
+        page.classList.add('pag-but');
+
+        addStyle();
+      }
+    }
+    renderPage(currentPage);
+    renderPagination();
+  });
 });
