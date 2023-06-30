@@ -213,32 +213,26 @@ form.addEventListener('submit', e => {
     console.log(data.page.totalPages);
 
     function renderPagination() {
-      for (let i = 1; i <= 10; i += 1) {
-        const page = document.createElement('button');
-        page.textContent = i;
-        page.addEventListener('click', () => {
-          currentPage = i;
-          renderPage(currentPage);
-        });
+        for (let i = 1; i <= 10; i += 1) {
+          const page = document.createElement('button');
+          page.textContent = i;
+          page.addEventListener('click', () => {
+            currentPage = i;
+            renderPage(currentPage); // Actualizar la galería con los eventos de la página actual
+            window.scrollTo(0, 0); // Desplazarse al principio de la página después de cambiar de página
+          });
 
-        paginationBox.appendChild(page);
-        page.classList.add('pag-but');
+          paginationBox.appendChild(page);
+          page.classList.add('pag-but');
 
-        addStyle();
+          addStyle();
+        }
       }
-    }
-    renderPage(currentPage);
-    renderPagination();
-  });
-});
 
-        paginationBox.appendChild(page);
-        page.classList.add('pag-but');
-
-        addStyle();
-      }
+      renderPage(currentPage);
+      renderPagination();
+    } else {
+      console.log('No se encontró la propiedad totalElements en data.page');
     }
-    renderPage(currentPage);
-    renderPagination();
   });
 });
