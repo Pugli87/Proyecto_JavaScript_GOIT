@@ -100,7 +100,7 @@ function loadData(keyword) {
 }
 
 /* --------------------------------------------------------------------------------------*/
-/* -------------------le hago pruebas a eventos llamdos por country ---------------------*/ -(
+/* -------------------le hago pruebas a eventos llamdos por country ---------------------*/ 
   /* --------------------------------------------------------------------------------------*/
 
   function loadCountry(countryCode) {
