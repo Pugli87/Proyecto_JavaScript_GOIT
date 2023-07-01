@@ -4,41 +4,39 @@ const form = document.getElementById('search-form');
 //const input = form.querySelector('input');
 const startBtn = document.getElementById('start-btn');
 const chooseBtn = document.getElementById('choose-btn');
-const chooseInput = document.getElementById('choose');//eliminar contenido
-const searchInput = document.getElementById('search');//eliminar contenido
-
-
+const chooseInput = document.getElementById('choose'); //eliminar contenido
+const searchInput = document.getElementById('search'); //eliminar contenido
 
 let data = [];
 
 const countryCode = document.querySelector('#choose').value; // Código del país que deseas buscar
-let currentPage = 0; 
+let currentPage = 0;
 
 /* --------------------------------------------------------------------------------------*/
 /* --- En esta parte se hace el primer cargado de elementos para mostar en la pagina ----*/
 /* --------------------------------------------------------------------------------------*/
 function LoadRandom() {
   eventsApi
-  .getRandom()
-  .then(result => {
-    const data = result._embedded.events;
-    const gallery = document.getElementById('gallery');
-    gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
-    data.forEach(item => {
-      const imageUrl =
-        item.images && item.images[4] && item.images[4].url
-          ? item.images[4].url
-          : '';
-      const venueCity =
-        item._embedded &&
-        item._embedded.venues &&
-        item._embedded.venues[0] &&
-        item._embedded.venues[0].city
-          ? item._embedded.venues[0].city.name
-          : '';
-      const listItem = document.createElement('li');
-      listItem.classList.add('gallery__item');
-      listItem.innerHTML = `
+    .getRandom()
+    .then(result => {
+      const data = result._embedded.events;
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
+      data.forEach(item => {
+        const imageUrl =
+          item.images && item.images[4] && item.images[4].url
+            ? item.images[4].url
+            : '';
+        const venueCity =
+          item._embedded &&
+          item._embedded.venues &&
+          item._embedded.venues[0] &&
+          item._embedded.venues[0].city
+            ? item._embedded.venues[0].city.name
+            : '';
+        const listItem = document.createElement('li');
+        listItem.classList.add('gallery__item');
+        listItem.innerHTML = `
         <a href="" class="gallery__link">
           <img class="gallery__img" src="${imageUrl}" alt=""> <br/>
         </a>
@@ -51,13 +49,13 @@ function LoadRandom() {
           ${venueCity}
         </span> <br/>
       `;
-      gallery.appendChild(listItem);
+        gallery.appendChild(listItem);
+      });
+      console.log(data);
+    })
+    .catch(error => {
+      console.log(error);
     });
-    console.log(data);
-  })
-  .catch(error => {
-    console.log(error);
-  });
 }
 LoadRandom(currentPage);
 
@@ -115,8 +113,8 @@ function loadCountry(countryCode) {
       data = result._embedded.events;(modif. para mostrar no eventons en tu area) */
       if (result._embedded && result._embedded.events.length > 0) {
         const data = result._embedded.events;
-      data.map(item => {
-        document.getElementById('gallery').innerHTML += `
+        data.map(item => {
+          document.getElementById('gallery').innerHTML += `
         <li class="gallery__item">
           <img class="gallery__img" src="${item.images[4].url}"> <br/>
           <span class="gallery__name">${item.name}</span> <br/>
@@ -136,8 +134,8 @@ function loadCountry(countryCode) {
           </span> <br/>
         </li>
         `;
-      });
-      }else{
+        });
+      } else {
         alert('No hay eventos en tu área.');
       }
     })
