@@ -180,9 +180,8 @@ function addStyle() {
     button.style.color = 'white';
   });
 }
-
 const paginationBox = document.querySelector('.pagination');
-
+// //Se agrega un evento de escucha al formulario de búsqueda para realizar una acción cuando se envíe el formulario.
 // Se agrega un evento de escucha al formulario de búsqueda para realizar una acción cuando se envíe el formulario.
 form.addEventListener('submit', e => {
   e.preventDefault(); // evitar que el formulario se envíe y se recargue la página
@@ -193,27 +192,19 @@ form.addEventListener('submit', e => {
   eventsApi.getByKey(document.getElementById('search').value).then(data => {
     if (data && data.page && data.page.totalElements) {
       console.log(data.page.totalElements);
-      console.log(data.page.totalPages);
-
-      if (data.page.totalElements === 0) {
-        Notiflix.Notify.failure(
-          'Sorry, there are no events matching your search query. Please try again.'
-        );
-      }
-
       const events = data['_embedded']['events'];
       const eventsPerPage = 16; // Se establece la cantidad de eventos por página en 20
       const totalPages = data.page.totalPages;
       console.log('cantidad paginas', totalPages); // Se calcula el número total de páginas dividiendo la cantidad total de eventos entre la cantidad de eventos por página y redondeando hacia arriba.
-      let currentPage = 1; // Se establece la página actual en 1.
+      let currentPage = 5; // Se establece la página actual en 1.
+
       // renderizar los eventos de la página actual
-      function renderPage(page) {
+      function renderPage(page = 5) {
         const startIndex = (page - 1) * eventsPerPage;
         const endIndex = page * eventsPerPage;
         const eventsToRender = events.slice(startIndex, endIndex);
         addStyle();
       }
-      console.log(data.page.totalPages);
 
       function renderPagination() {
         for (let i = 1; i <= 10; i += 1) {
@@ -221,7 +212,7 @@ form.addEventListener('submit', e => {
           page.textContent = i;
           page.addEventListener('click', () => {
             currentPage = i;
-            renderPage(currentPage); // Actualizar la galería con los eventos de la página actual
+            renderPage(currentPage);
             window.scrollTo(0, 0); // Desplazarse al principio de la página después de cambiar de página
           });
 
