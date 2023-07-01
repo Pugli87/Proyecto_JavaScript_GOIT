@@ -4,8 +4,8 @@ const form = document.getElementById('search-form');
 //const input = form.querySelector('input');
 const startBtn = document.getElementById('start-btn');
 const chooseBtn = document.getElementById('choose-btn');
-let chooseInput = document.getElementById('choose'); //eliminar contenido
-let searchInput = document.getElementById('search'); //eliminar contenido
+const chooseInput = document.getElementById('choose'); //eliminar contenido
+const searchInput = document.getElementById('search'); //eliminar contenido
 
 let data = [];
 
