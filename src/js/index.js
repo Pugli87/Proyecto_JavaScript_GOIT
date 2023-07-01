@@ -62,6 +62,7 @@ LoadRandom(currentPage);
 /* --------------------------------------------------------------------------------------*/
 /*--- aca cargamos data o elementos desde el boton buscar con una palab ra de busqueda --*/
 /* --------------------------------------------------------------------------------------*/
+
 function loadData(keyword) {
   document.getElementById('gallery').innerHTML = '';
   eventsApi
