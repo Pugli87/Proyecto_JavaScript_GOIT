@@ -4,8 +4,8 @@ const form = document.getElementById('search-form');
 //const input = form.querySelector('input');
 const startBtn = document.getElementById('start-btn');
 const chooseBtn = document.getElementById('choose-btn');
-let chooseInput = document.getElementById('choose'); //eliminar contenido
-let searchInput = document.getElementById('search'); //eliminar contenido
+const chooseInput = document.getElementById('choose'); //eliminar contenido
+const searchInput = document.getElementById('search'); //eliminar contenido
 
 let data = [];
 
@@ -190,16 +190,18 @@ form.addEventListener('submit', e => {
   searchInput = document.getElementById('search');
 
   eventsApi.getByKey(document.getElementById('search').value).then(data => {
+
     if (data && data.page && data.page.totalElements) {
       console.log(data.page.totalElements);
       const events = data['_embedded']['events'];
       const eventsPerPage = 16; // Se establece la cantidad de eventos por página en 20
       const totalPages = data.page.totalPages;
-      console.log('cantidad paginas', totalPages); // Se calcula el número total de páginas dividiendo la cantidad total de eventos entre la cantidad de eventos por página y redondeando hacia arriba.
-      let currentPage = 5; // Se establece la página actual en 1.
+      console.log('cantidad paginas', totalPages); // Se calcula el número total de páginas dividiendo la cantidad total de eventos entre la cantidad de eventos por página y redondeando haci
+      let currentPage = 1; // Se establece la página actual en 1.
 
       // renderizar los eventos de la página actual
-      function renderPage(page = 5) {
+      
+      function renderPage(page) {
         const startIndex = (page - 1) * eventsPerPage;
         const endIndex = page * eventsPerPage;
         const eventsToRender = events.slice(startIndex, endIndex);
