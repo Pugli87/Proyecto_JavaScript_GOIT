@@ -1,31 +1,109 @@
 .footer {
-    background-color: black;
-    padding: 27px;
+  background-color: black;
+  padding: 27px;
 
-    &__p {
-        width: 252px;
-        height: 34px;
-        margin-left: auto;
-        margin-right: auto;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 17.07px;
-        text-align: center;
-        color: #939393;
+  &__pag {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+
+  &__btn {
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: #ffffff;
+    border-radius: 10px 0;
+    width: 40px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    transition: 0.3s border ease-in-out, 0.3s color ease-in-out;
+
+    &:hover {
+      border: 1px solid #dc56c5;
+      color: #dc56c5;
     }
+  }
+
+  &__svg {
+    fill: #dc56c5;
+  }
+
+  &__page {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    color: #dc56c5;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dc56c5;
+    border-radius: 50%;
+  }
+
+  &__p {
+    width: 252px;
+    height: 34px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17.07px;
+    text-align: center;
+    color: #939393;
+  }
 }
 
 @media (min-width: 768px) {
-    .footer {
-        background-color: black;
+  .footer {
+    background-color: black;
 
-        &__p {
-            width: 521px;
-            height: 20px;
-            padding-bottom: 15px;
-            font-size: 16px;
-            line-height: 19.5px;
-
-        }
+    &__p {
+      width: 521px;
+      height: 20px;
+      padding-bottom: 15px;
+      font-size: 16px;
+      line-height: 19.5px;
     }
+  }
+}
+
+////PAGINACION------------------------
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5px;
+}
+
+.pag-but {
+  border: 1px solid transparent;
+  background-color: transparent;
+  border-radius: 10px 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  color: #ffffff;
+  transition: 0.3s border ease-in-out, 0.3s color ease-in-out;
+
+  &:hover {
+    border: 1px solid #dc56c5;
+    color: #dc56c5;
+  }
 }
