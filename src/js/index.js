@@ -2,7 +2,6 @@ import eventsApi from '../js/eventsApi';
 
 // hago una referencia al elemento del formulario y al campo de entrada
 const form = document.getElementById('search-form');
-//const input = form.querySelector('input');
 const startBtn = document.getElementById('start-btn');
 const chooseInput = document.getElementById('choose'); //eliminar contenido
 const searchInput = document.getElementById('search'); //eliminar contenido
