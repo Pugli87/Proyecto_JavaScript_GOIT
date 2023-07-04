@@ -51,16 +51,18 @@
     color: #dc56c5;
     align-items: center;
     justify-content: center;
-    border: 1px solid #dc56c5;
+    //border: 1px solid #dc56c5;
     border-radius: 10px 0;
-    font-size: 14px;
+    font-size: 16px;
+
+    line-height: 20px;
     background-color: #93939300;
 
     &:not(:last-child) {
       margin-right: 15px;
     }
     &:hover {
-      border: 2px solid #dc56c5;
+      border: 3px solid #dc56c5;
     }
   }
 
