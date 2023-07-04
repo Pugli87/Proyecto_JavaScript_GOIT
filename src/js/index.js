@@ -1,4 +1,7 @@
 import eventsApi from '../js/eventsApi';
+import Notiflix from 'notiflix';
+Notiflix.Notify.init();
+
 
 // hago una referencia al elemento del formulario y al campo de entrada
 const form = document.getElementById('search-form');
@@ -118,35 +121,39 @@ function loadCountry(countryCode, currentPage) {
   eventsApi
     .getByCountry(countryCode)
     .then(result => {
-      const data = result._embedded.events;
-      const gallery = document.getElementById('gallery');
-      gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
-      data.forEach(item => {
-        const imageUrl = item?.images.filter(item => item.width > 600)[0].url;
-        const venueCity =
-          item._embedded &&
-          item._embedded.venues &&
-          item._embedded.venues[0] &&
-          item._embedded.venues[0].city
-            ? item._embedded.venues[0].city.name
-            : '';
-        const listItem = document.createElement('li');
-        listItem.classList.add('gallery__item');
-        listItem.innerHTML = `
-          <a href="" class="gallery__link">
-            <img class="gallery__img" src="${imageUrl}" alt=""> <br/>
-          </a>
-          <span class="gallery__name">${item.name}</span> <br/>
-          <span class="gallery__date">${item.dates.start.localDate}</span> <br/>
-          <span class="gallery__city">
-            <svg width="6" height="9" viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 0C1.34581 0 0 1.40339 0 3.12836C0 5.29645 3.00295 9 3.00295 9C3.00295 9 6 5.18983 6 3.12836C6 1.40339 4.65424 0 3 0ZM3.90516 4.04434C3.65558 4.30455 3.32781 4.43469 3 4.43469C2.67224 4.43469 2.34437 4.30455 2.09489 4.04434C1.59577 3.52392 1.59577 2.67709 2.09489 2.15662C2.33658 1.90448 2.65807 1.76561 3 1.76561C3.34193 1.76561 3.66337 1.90453 3.90516 2.15662C4.40428 2.67709 4.40428 3.52392 3.90516 4.04434Z" fill="white"/>
-            </svg>
-            ${venueCity}
-          </span> <br/>
-        `;
-        gallery.appendChild(listItem);
-      });
+      const data = result._embedded && result._embedded.events ? result._embedded.events : [];//se modifico porque me salia no definida en consola, asi que le agregue esta verificacion, si result._embedded existe en result y si result._embedded.events existe en _embedded y si no estara vacio, [] el array,
+      if (data.length === 0) {
+        Notiflix.Notify.failure("No hay eventos en tu País");/* notiflix, se puso un condicional  */
+      }else{
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
+        data.forEach(item => {
+          const imageUrl = item?.images.filter(item => item.width > 600)[0].url;
+          const venueCity =
+            item._embedded &&
+            item._embedded.venues &&
+            item._embedded.venues[0] &&
+            item._embedded.venues[0].city
+              ? item._embedded.venues[0].city.name
+              : '';
+          const listItem = document.createElement('li');
+          listItem.classList.add('gallery__item');
+          listItem.innerHTML = `
+            <a href="" class="gallery__link">
+              <img class="gallery__img" src="${imageUrl}" alt=""> <br/>
+            </a>
+            <span class="gallery__name">${item.name}</span> <br/>
+            <span class="gallery__date">${item.dates.start.localDate}</span> <br/>
+            <span class="gallery__city">
+              <svg width="6" height="9" viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 0C1.34581 0 0 1.40339 0 3.12836C0 5.29645 3.00295 9 3.00295 9C3.00295 9 6 5.18983 6 3.12836C6 1.40339 4.65424 0 3 0ZM3.90516 4.04434C3.65558 4.30455 3.32781 4.43469 3 4.43469C2.67224 4.43469 2.34437 4.30455 2.09489 4.04434C1.59577 3.52392 1.59577 2.67709 2.09489 2.15662C2.33658 1.90448 2.65807 1.76561 3 1.76561C3.34193 1.76561 3.66337 1.90453 3.90516 2.15662C4.40428 2.67709 4.40428 3.52392 3.90516 4.04434Z" fill="white"/>
+              </svg>
+              ${venueCity}
+            </span> <br/>
+          `;
+          gallery.appendChild(listItem);
+        });
+      }
     })
     .catch(error => {
       console.error(error);
@@ -162,9 +169,13 @@ function loadEvents(keyword, countryCode, currentPage) {
   eventsApi
     .getByKeyAndCountry(keyword, countryCode, currentPage)
     .then(result => {
-      const data = result._embedded.events;
+      const data = result._embedded && result._embedded.events ? result._embedded.events : [];
       const gallery = document.getElementById('gallery');
       gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
+      if (data.length === 0) {
+        Notiflix.Notify.failure("No hay eventos para el artista en tu País");;
+        return;
+      }
       data.forEach(item => {
         const imageUrl = item?.images.filter(item => item.width > 600)[0].url;
         const venueCity =
