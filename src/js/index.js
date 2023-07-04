@@ -8,6 +8,58 @@ const searchInput = document.getElementById('search');
 
 document.querySelector('#choose').value;
 let data = [];
+let currentPage = 1;
+let keyword = ''; // Variable global para almacenar la palabra clave de búsqueda
+const paginationBox = document.getElementById('pages');
+function validaForm() {
+  const chooseValue = chooseInput.value;
+  const searchValue = searchInput.value;
+
+  if (chooseValue.trim() === '' && searchValue.trim() === '') {
+    alert('Por favor, completa alguno de los campos del formulario.');
+    return false;
+  }
+
+  return true;
+}
+
+/* ===================================================================================== */
+/* -------------- Estas dos funciones son para la paginacion de la pagina -------------- */
+/* ===================================================================================== */
+
+function renderPagination() {
+  if (pagination.totalPages !== undefined) {
+    const maxButtons = 5; // Número máximo de botones de paginación a mostrar
+    const totalPages = Math.min(pagination.totalPages, maxButtons); // Asegura que el número de botones no sea mayor que el total de páginas
+    const startPage = Math.max(1, currentPage - Math.floor(maxButtons / 3));
+    const endPage = Math.min(startPage + totalPages - 1, pagination.totalPages);
+
+    paginationBox.innerHTML = ''; // Vacía el contenido del contenedor antes de agregar los nuevos botones
+
+    for (let i = startPage; i <= endPage; i++) {
+      addPaginationButton(i);
+    }
+  }
+}
+function addPaginationButton(pageNumber) {
+  const page = document.createElement('button');
+  page.textContent = pageNumber;
+  page.setAttribute('data-page', pageNumber); // Asigna el número de página como atributo personalizado
+  page.addEventListener('click', event => {
+    const selectedPage = parseInt(event.target.textContent);
+    paginationBox.innerHTML = ''; // Vacía el contenido del contenedor antes de agregar los nuevos botones
+    currentPage = selectedPage - 1;
+    renderPagination(currentPage);
+    window.scrollTo(0, 0); // Desplazarse al principio de la página después de cambiar de página
+    console.log(`Botón ${selectedPage} seleccionado`);
+    keyword = document.querySelector('#search').value;
+    if (!searchInput.value && !chooseInput.value) {
+      console.log('Pagina actual', currentPage);
+      loadRandom(currentPage);
+    }
+    if (searchInput.value && !chooseInput.value) {
+      loadData(keyword, currentPage);
+    }
 
     if (!searchInput.value && chooseInput.value) {
       loadCountry(keyword, currentPage);
@@ -194,8 +246,37 @@ chooseInput.addEventListener('change', () => {
   // pageNext.textContent = 3;
 });
 
-        paginationBox.appendChild(page);
-        page.classList.add('pag-but');
+/* ====================================================================================== */
+/* --------------------------------- Probando paginacion -------------------------------- */
+/* ====================================================================================== */
+/*
+=============================================================
+Insertar el HTML dentro del contenedor utilizando innerHTML
+=============================================================
+
+if (Responce && responce.length > 0) {
+  const pagesContainer = document.getElementById('pages');
+
+  // HTML que deseas insertar dentro del contenedor
+  const html = `
+    <button class="footer__page" id="page"></button>
+    <button class="footer__page" id="pagePrev"></button>
+    <button class="footer__page" id="pageNext"></button>
+  `;
+==============================================================
+==============================================================
+==============================================================
+  // Insertar el HTML dentro del contenedor utilizando innerHTML
+  pagesContainer.innerHTML = html;
+} else {
+  console.log('No se encontraron datos en la API.');
+}*/
+/*
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+let page = document.getElementById('page');
+let pagePrev = document.getElementById('pagePrev');
+let pageNext = document.getElementById('pageNext');
 
 //page.textContent = currentPage; // asignacion de la pagina al html por medio del DOM
 //pagePrev.textContent = parseInt(page.textContent) + 1;
@@ -214,9 +295,54 @@ function goToPreviousPage() {
   }
 }
 
-    renderPage(currentPage);
-    renderPagination();
-  });
+function goToNextPage() {
+  currentPage++;
+  //page.textContent = currentPage;
+  // pagePrev.textContent = parseInt(page.textContent) + 1;
+  // pageNext.textContent = parseInt(pagePrev.textContent) + 1;
+  //loadRandom(currentPage);
+}
+// eventos de botones para avanzar o atrasar la pagina
+prev?.addEventListener('click', goToPreviousPage);
+next?.addEventListener('click', goToNextPage);
+
+page?.addEventListener('click', () => {
+  keyword = document.querySelector('#search').value;
+  currentPage = page.textContent;
+  if (!searchInput.value && !chooseInput.value) {
+    console.log('pugli', currentPage);
+    loadRandom(currentPage);
+  }
+  if (searchInput.value && !chooseInput.value) {
+    loadData(keyword, currentPage);
+  }
+
+  if (!searchInput.value && chooseInput.value) {
+    loadCountry(keyword, currentPage);
+  }
+  if (searchInput.value && chooseInput.value) {
+    loadEvents(keyword, countryCode, currentPage);
+  }
+});
+
+pagePrev?.addEventListener('click', () => {
+  console.log(pagePrev.textContent);
+  keyword = document.querySelector('#search').value;
+  currentPage = parseInt(page.textContent) + 1;
+  if (!searchInput.value && !chooseInput.value) {
+    console.log('pugli', currentPage);
+    loadRandom(currentPage);
+  }
+  if (searchInput.value && !chooseInput.value) {
+    loadData(keyword, currentPage);
+  }
+
+  if (!searchInput.value && chooseInput.value) {
+    loadCountry(keyword, currentPage);
+  }
+  if (searchInput.value && chooseInput.value) {
+    loadEvents(keyword, countryCode, currentPage);
+  }
 });
 
 pageNext?.addEventListener('click', () => {
