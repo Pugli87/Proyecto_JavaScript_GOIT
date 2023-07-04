@@ -2,7 +2,7 @@ const API_KEY = 'xtboiYIsAyoQG85vMxNOToDrUrhqLhlf';
 const BASE_URL = 'https://app.ticketmaster.com/discovery/v2/';
 
 const eventsApi = {
-  async getByKey(keyWord, page = 5) {
+  async getByKey(keyWord, page = 2) {
     try {
       const searchRequest = `${BASE_URL}events.json?&keyword=${keyWord}&apikey=${API_KEY}&size=16&page=${page}&includeTBA=no&includeTBD=no&sort=random`;
       const responce = await fetch(searchRequest);
