@@ -1,4 +1,8 @@
 import eventsApi from '../js/eventsApi';
+/* notiflix */
+import Notiflix from 'notiflix';
+Notiflix.Notify.init();
+
 
 // hago una referencia al elemento del formulario y al campo de entrada
 const form = document.getElementById('search-form');
@@ -156,13 +160,17 @@ function loadCountry(countryCode, currentPage) {
   eventsApi
     .getByCountry(countryCode, currentPage)
     .then(result => {
-      const data = result._embedded.events;
-      const gallery = document.getElementById('gallery');
-      gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
-      data.forEach(item => {
-        const listItem = renderEvents(item);
-        gallery.appendChild(listItem);
-      });
+      const data = result._embedded && result._embedded.events ? result._embedded.events : [];//se modifico porque me salia no definida en consola, asi que le agregue esta verificacion, si result._embedded existe en result y si result._embedded.events existe en _embedded y si no estara vacio, [] el array,
+      if (data.length === 0) {
+        Notiflix.Notify.failure("No hay eventos en tu País");/* notiflix, se puso un condicional  */
+      }else{
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
+        data.forEach(item => {
+          const listItem = renderEvents(item);
+          gallery.appendChild(listItem);
+        });
+      }
     })
     .catch(error => {
       console.error(error);
@@ -178,9 +186,13 @@ function loadEvents(keyword, countryCode, currentPage) {
   eventsApi
     .getByKeyAndCountry(keyword, countryCode, currentPage)
     .then(result => {
-      const data = result._embedded.events;
+      const data = result._embedded && result._embedded.events ? result._embedded.events : [];
       const gallery = document.getElementById('gallery');
       gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
+      if (data.length === 0) {
+        Notiflix.Notify.failure("No hay eventos para el artista en tu País");;
+        return;
+      }
       data.forEach(item => {
         const listItem = renderEvents(item);
         gallery.appendChild(listItem);
