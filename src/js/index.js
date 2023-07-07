@@ -1,3 +1,7 @@
+/*=============================================================================== */
+/* falta arreglar boton de pagina final ya que no carga cuando son muchas paginas */
+/*=============================================================================== */
+
 import eventsApi from '../js/eventsApi';
 /* notiflix */
 import Notiflix from 'notiflix';
