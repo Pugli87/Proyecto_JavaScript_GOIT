@@ -300,9 +300,4 @@ chooseInput.addEventListener('change', () => {
       loadData(document.querySelector('#search').value);
     }
   }
-
-  // currentPage = 1;
-  // page.textContent = 1;
-  // pagePrev.textContent = 2;
-  // pageNext.textContent = 3;
 });
