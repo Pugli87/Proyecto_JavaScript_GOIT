@@ -6,12 +6,12 @@ Notiflix.Notify.init();
 // hago una referencia al elemento del formulario y al campo de entrada
 const form = document.getElementById('search-form');
 const startBtn = document.getElementById('start-btn');
-const chooseInput = document.getElementById('choose');
-const searchInput = document.getElementById('search');
+let chooseInput = document.getElementById('choose');
+let searchInput = document.getElementById('search');
 
 document.querySelector('#choose').value;
 let data = [];
-let currentPage = 1;
+let currentPage = 0;
 let keyword = ''; // Variable global para almacenar la palabra clave de búsqueda
 const paginationBox = document.getElementById('pages');
 function validaForm() {
@@ -31,31 +31,54 @@ function validaForm() {
 /* ===================================================================================== */
 
 function renderPagination() {
-  if (pagination.totalPages !== undefined) {
+  if (pagination.totalPages !== undefined && pagination.totalElements > 0) {
     const maxButtons = 5; // Número máximo de botones de paginación a mostrar
-    const totalPages = Math.min(pagination.totalPages, maxButtons); // Asegura que el número de botones no sea mayor que el total de páginas
-    const startPage = Math.max(1, currentPage - Math.floor(maxButtons / 3));
-    const endPage = Math.min(startPage + totalPages - 1, pagination.totalPages);
+    const totalPages = pagination.totalPages;
+    let startPage, endPage;
+
+    if (totalPages <= maxButtons) {
+      // Si el número de páginas es menor o igual al número máximo de botones
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      // Si hay más páginas que el número máximo de botones
+      if (currentPage <= Math.floor(maxButtons / 2)) {
+        // Si estamos en las primeras páginas
+        startPage = 1;
+        endPage = maxButtons;
+      } else if (currentPage >= totalPages - Math.floor(maxButtons / 2)) {
+        // Si estamos en las últimas páginas
+        startPage = totalPages - maxButtons + 1;
+        endPage = totalPages;
+      } else {
+        // Si estamos en páginas intermedias
+        startPage = currentPage - Math.floor(maxButtons / 2);
+        endPage = currentPage + Math.ceil(maxButtons / 2) - 1;
+      }
+    }
 
     paginationBox.innerHTML = ''; // Vacía el contenido del contenedor antes de agregar los nuevos botones
 
     for (let i = startPage; i <= endPage; i++) {
       addPaginationButton(i);
     }
+  } else {
+    paginationBox.innerHTML = ''; // Vacía el contenido del contenedor si no hay eventos disponibles
   }
 }
+
 function addPaginationButton(pageNumber) {
   const page = document.createElement('button');
   page.textContent = pageNumber;
   page.setAttribute('data-page', pageNumber); // Asigna el número de página como atributo personalizado
   page.addEventListener('click', event => {
     const selectedPage = parseInt(event.target.textContent);
-    paginationBox.innerHTML = ''; // Vacía el contenido del contenedor antes de agregar los nuevos botones
     currentPage = selectedPage - 1;
-    renderPagination(currentPage);
+    renderPagination();
     window.scrollTo(0, 0); // Desplazarse al principio de la página después de cambiar de página
     console.log(`Botón ${selectedPage} seleccionado`);
     keyword = document.querySelector('#search').value;
+    countryCode = chooseInput.value; // Obtener el valor de countryCode desde chooseInput
     if (!searchInput.value && !chooseInput.value) {
       console.log('Pagina actual', currentPage);
       loadRandom(currentPage);
@@ -63,9 +86,8 @@ function addPaginationButton(pageNumber) {
     if (searchInput.value && !chooseInput.value) {
       loadData(keyword, currentPage);
     }
-
     if (!searchInput.value && chooseInput.value) {
-      loadCountry(keyword, currentPage);
+      loadCountry(countryCode, currentPage);
     }
     if (searchInput.value && chooseInput.value) {
       loadEvents(keyword, countryCode, currentPage);
@@ -77,6 +99,7 @@ function addPaginationButton(pageNumber) {
 
 /*======================================================================================= */
 // funcion para dibujar el html en la pagina
+
 function renderEvents(item) {
   const imageUrl = item?.images.filter(item => item.width > 600)[0].url;
   const venueCity =
@@ -119,7 +142,14 @@ function loadRandom(currentPage) {
         const listItem = renderEvents(item);
         gallery.appendChild(listItem);
       });
-      renderPagination();
+
+      pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
+      renderPagination(); // Actualiza los botones de paginación
+
+      if (data.length === 0) {
+        paginationBox.innerHTML = ''; // Vacía el contenido del contenedor si no hay eventos disponibles
+        Notiflix.Notify.warning('No hay eventos disponibles');
+      }
     })
     .catch(error => {
       console.log(error);
@@ -143,7 +173,13 @@ function loadData(keyword, currentPage) {
           const listItem = renderEvents(item);
           gallery.appendChild(listItem);
         });
+      } else {
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = '<p>No hay eventos disponibles</p>'; // Muestra un mensaje indicando que no hay eventos
       }
+
+      pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
+      renderPagination(); // Actualiza los botones de paginación
     })
     .catch(error => {
       console.error(error);
@@ -156,20 +192,29 @@ function loadData(keyword, currentPage) {
 
 function loadCountry(countryCode, currentPage) {
   document.getElementById('gallery').innerHTML = '';
+  currentPage = currentPage || 0; // Establece currentPage en 0 si no se proporciona un valor
   eventsApi
     .getByCountry(countryCode, currentPage)
     .then(result => {
-      const data = result._embedded && result._embedded.events ? result._embedded.events : [];//se modifico porque me salia no definida en consola, asi que le agregue esta verificacion, si result._embedded existe en result y si result._embedded.events existe en _embedded y si no estara vacio, [] el array,
-      if (data.length === 0) {
-        Notiflix.Notify.warning("No hay eventos en tu País");/* notiflix, se puso un condicional  */
-      }else{
+      const data =
+        result._embedded && result._embedded.events
+          ? result._embedded.events
+          : [];
       const gallery = document.getElementById('gallery');
       gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
-      data.forEach(item => {
-        const listItem = renderEvents(item);
-        gallery.appendChild(listItem);
-      });
-    }
+
+      if (data.length === 0) {
+        Notiflix.Notify.warning('No hay eventos en tu país');
+        paginationBox.innerHTML = ''; // Vacía el contenido del contenedor de paginación
+      } else {
+        data.forEach(item => {
+          const listItem = renderEvents(item);
+          gallery.appendChild(listItem);
+        });
+
+        pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
+        renderPagination(); // Actualiza los botones de paginación
+      }
     })
     .catch(error => {
       console.error(error);
@@ -185,17 +230,22 @@ function loadEvents(keyword, countryCode, currentPage) {
   eventsApi
     .getByKeyAndCountry(keyword, countryCode, currentPage)
     .then(result => {
-      const data = result._embedded && result._embedded.events ? result._embedded.events : [];
-      const gallery = document.getElementById('gallery');
-      gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
+      const data =
+        result._embedded && result._embedded.events
+          ? result._embedded.events
+          : [];
+
       if (data.length === 0) {
-        Notiflix.Notify.warning("No hay eventos para el artista en tu País");;
-        return;
+        Notiflix.Notify.warning('No hay eventos para el artista en tu País');
+      } else {
+        data.forEach(item => {
+          const listItem = renderEvents(item);
+          gallery.appendChild(listItem);
+        });
+
+        pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
+        renderPagination(); // Actualiza los botones de paginación
       }
-      data.forEach(item => {
-        const listItem = renderEvents(item);
-        gallery.appendChild(listItem);
-      });
     })
     .catch(error => {
       console.error(error);
@@ -256,122 +306,3 @@ chooseInput.addEventListener('change', () => {
   // pagePrev.textContent = 2;
   // pageNext.textContent = 3;
 });
-
-/* ====================================================================================== */
-/* --------------------------------- Probando paginacion -------------------------------- */
-/* ====================================================================================== */
-/*
-=============================================================
-Insertar el HTML dentro del contenedor utilizando innerHTML
-=============================================================
-
-if (Responce && responce.length > 0) {
-  const pagesContainer = document.getElementById('pages');
-
-  // HTML que deseas insertar dentro del contenedor
-  const html = `
-    <button class="footer__page" id="page"></button>
-    <button class="footer__page" id="pagePrev"></button>
-    <button class="footer__page" id="pageNext"></button>
-  `;
-==============================================================
-==============================================================
-==============================================================
-  // Insertar el HTML dentro del contenedor utilizando innerHTML
-  pagesContainer.innerHTML = html;
-} else {
-  console.log('No se encontraron datos en la API.');
-}*/
-/*
-const prev = document.getElementById('prev');
-const next = document.getElementById('next');
-let page = document.getElementById('page');
-let pagePrev = document.getElementById('pagePrev');
-let pageNext = document.getElementById('pageNext');
-
-//page.textContent = currentPage; // asignacion de la pagina al html por medio del DOM
-//pagePrev.textContent = parseInt(page.textContent) + 1;
-//pageNext.textContent = parseInt(pagePrev.textContent) + 1;
-console.log(currentPage);
-function goToPreviousPage() {
-  console.log(currentPage);
-  if (currentPage > 1) {
-    currentPage--;
-    page.textContent = currentPage;
-    //pagePrev.textContent -= 1;
-    pagePrev.textContent = parseInt(page.textContent) + 1;
-    //pageNext.textContent -= 1;
-    pageNext.textContent = parseInt(pagePrev.textContent) + 1;
-    //loadRandom(currentPage);
-  }
-}
-
-function goToNextPage() {
-  currentPage++;
-  //page.textContent = currentPage;
-  // pagePrev.textContent = parseInt(page.textContent) + 1;
-  // pageNext.textContent = parseInt(pagePrev.textContent) + 1;
-  //loadRandom(currentPage);
-}
-// eventos de botones para avanzar o atrasar la pagina
-prev?.addEventListener('click', goToPreviousPage);
-next?.addEventListener('click', goToNextPage);
-
-page?.addEventListener('click', () => {
-  keyword = document.querySelector('#search').value;
-  currentPage = page.textContent;
-  if (!searchInput.value && !chooseInput.value) {
-    console.log('pugli', currentPage);
-    loadRandom(currentPage);
-  }
-  if (searchInput.value && !chooseInput.value) {
-    loadData(keyword, currentPage);
-  }
-
-  if (!searchInput.value && chooseInput.value) {
-    loadCountry(keyword, currentPage);
-  }
-  if (searchInput.value && chooseInput.value) {
-    loadEvents(keyword, countryCode, currentPage);
-  }
-});
-
-pagePrev?.addEventListener('click', () => {
-  console.log(pagePrev.textContent);
-  keyword = document.querySelector('#search').value;
-  currentPage = parseInt(page.textContent) + 1;
-  if (!searchInput.value && !chooseInput.value) {
-    console.log('pugli', currentPage);
-    loadRandom(currentPage);
-  }
-  if (searchInput.value && !chooseInput.value) {
-    loadData(keyword, currentPage);
-  }
-
-  if (!searchInput.value && chooseInput.value) {
-    loadCountry(keyword, currentPage);
-  }
-  if (searchInput.value && chooseInput.value) {
-    loadEvents(keyword, countryCode, currentPage);
-  }
-});
-
-pageNext?.addEventListener('click', () => {
-  console.log(pageNext.textContent);
-  keyword = document.querySelector('#search').value;
-  currentPage = parseInt(pagePrev.textContent) + 1;
-  if (!searchInput.value && !chooseInput.value) {
-    loadRandom(currentPage);
-  }
-  if (searchInput.value && !chooseInput.value) {
-    loadData(keyword, currentPage);
-  }
-
-  if (!searchInput.value && chooseInput.value) {
-    loadCountry(keyword, currentPage);
-  }
-  if (searchInput.value && chooseInput.value) {
-    loadEvents(keyword, countryCode, currentPage);
-  }
-});
-*/
