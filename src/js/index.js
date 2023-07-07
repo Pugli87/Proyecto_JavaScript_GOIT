@@ -321,14 +321,14 @@ function loadCountry(countryCode, currentPage) {
       const data =
         result._embedded && result._embedded.events
           ? result._embedded.events
-          : []; //se modifico porque me salia no definida en consola, asi que le agregue esta verificacion, si result._embedded existe en result y si result._embedded.events existe en _embedded y si no estara vacio, [] el array,
+          : [];
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
+
       if (data.length === 0) {
-        Notiflix.Notify.warning(
-          'No hay eventos en tu País'
-        ); /* notiflix, se puso un condicional  */
+        Notiflix.Notify.warning('No hay eventos en tu país');
+        paginationBox.innerHTML = ''; // Vacía el contenido del contenedor de paginación
       } else {
-        const gallery = document.getElementById('gallery');
-        gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
         data.forEach(item => {
           const listItem = renderEvents(item);
           gallery.appendChild(listItem);
