@@ -6,12 +6,12 @@ Notiflix.Notify.init();
 // hago una referencia al elemento del formulario y al campo de entrada
 const form = document.getElementById('search-form');
 const startBtn = document.getElementById('start-btn');
-const chooseInput = document.getElementById('choose');
-const searchInput = document.getElementById('search');
+let chooseInput = document.getElementById('choose');
+let searchInput = document.getElementById('search');
 
 document.querySelector('#choose').value;
 let data = [];
-let currentPage = 1;
+let currentPage = 0;
 let keyword = ''; // Variable global para almacenar la palabra clave de búsqueda
 const paginationBox = document.getElementById('pages');
 function validaForm() {
@@ -29,7 +29,7 @@ function validaForm() {
 /* ===================================================================================== */
 /* -------------- Estas dos funciones son para la paginacion de la pagina -------------- */
 /* ===================================================================================== */
-
+/*
 function renderPagination() {
   if (pagination.totalPages !== undefined) {
     const maxButtons = 5; // Número máximo de botones de paginación a mostrar
@@ -49,7 +49,7 @@ function addPaginationButton(pageNumber) {
   page.textContent = pageNumber;
   page.setAttribute('data-page', pageNumber); // Asigna el número de página como atributo personalizado
   page.addEventListener('click', event => {
-    const selectedPage = parseInt(event.target.textContent);
+    let selectedPage = parseInt(event.target.textContent);
     paginationBox.innerHTML = ''; // Vacía el contenido del contenedor antes de agregar los nuevos botones
     currentPage = selectedPage - 1;
     renderPagination(currentPage);
@@ -73,10 +73,114 @@ function addPaginationButton(pageNumber) {
   });
   paginationBox.appendChild(page);
   page.classList.add('footer__page');
+}*/
+
+/*
+function renderPagination() {
+  if (pagination.totalPages !== undefined) {
+    const maxButtons = 5; // Número máximo de botones de paginación a mostrar
+    const totalPages = pagination.totalPages;
+    let startPage, endPage;
+
+    if (totalPages <= maxButtons) {
+      // Si el número de páginas es menor o igual al número máximo de botones
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      // Si hay más páginas que el número máximo de botones
+      if (currentPage <= Math.floor(maxButtons / 2)) {
+        // Si estamos en las primeras páginas
+        startPage = 1;
+        endPage = maxButtons;
+      } else if (currentPage >= totalPages - Math.floor(maxButtons / 2)) {
+        // Si estamos en las últimas páginas
+        startPage = totalPages - maxButtons + 1;
+        endPage = totalPages;
+      } else {
+        // Si estamos en páginas intermedias
+        startPage = currentPage - Math.floor(maxButtons / 2);
+        endPage = currentPage + Math.ceil(maxButtons / 2) - 1;
+      }
+    }
+
+    paginationBox.innerHTML = ''; // Vacía el contenido del contenedor antes de agregar los nuevos botones
+
+    for (let i = startPage; i <= endPage; i++) {
+      addPaginationButton(i);
+    }
+  }
+}*/
+
+function renderPagination() {
+  if (pagination.totalPages !== undefined && pagination.totalElements > 0) {
+    const maxButtons = 5; // Número máximo de botones de paginación a mostrar
+    const totalPages = pagination.totalPages;
+    let startPage, endPage;
+
+    if (totalPages <= maxButtons) {
+      // Si el número de páginas es menor o igual al número máximo de botones
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      // Si hay más páginas que el número máximo de botones
+      if (currentPage <= Math.floor(maxButtons / 2)) {
+        // Si estamos en las primeras páginas
+        startPage = 1;
+        endPage = maxButtons;
+      } else if (currentPage >= totalPages - Math.floor(maxButtons / 2)) {
+        // Si estamos en las últimas páginas
+        startPage = totalPages - maxButtons + 1;
+        endPage = totalPages;
+      } else {
+        // Si estamos en páginas intermedias
+        startPage = currentPage - Math.floor(maxButtons / 2);
+        endPage = currentPage + Math.ceil(maxButtons / 2) - 1;
+      }
+    }
+
+    paginationBox.innerHTML = ''; // Vacía el contenido del contenedor antes de agregar los nuevos botones
+
+    for (let i = startPage; i <= endPage; i++) {
+      addPaginationButton(i);
+    }
+  } else {
+    paginationBox.innerHTML = ''; // Vacía el contenido del contenedor si no hay eventos disponibles
+  }
+}
+
+function addPaginationButton(pageNumber) {
+  const page = document.createElement('button');
+  page.textContent = pageNumber;
+  page.setAttribute('data-page', pageNumber); // Asigna el número de página como atributo personalizado
+  page.addEventListener('click', event => {
+    const selectedPage = parseInt(event.target.textContent);
+    currentPage = selectedPage - 1;
+    renderPagination();
+    window.scrollTo(0, 0); // Desplazarse al principio de la página después de cambiar de página
+    console.log(`Botón ${selectedPage} seleccionado`);
+    keyword = document.querySelector('#search').value;
+    countryCode = chooseInput.value; // Obtener el valor de countryCode desde chooseInput
+    if (!searchInput.value && !chooseInput.value) {
+      console.log('Pagina actual', currentPage);
+      loadRandom(currentPage);
+    }
+    if (searchInput.value && !chooseInput.value) {
+      loadData(keyword, currentPage);
+    }
+    if (!searchInput.value && chooseInput.value) {
+      loadCountry(countryCode, currentPage);
+    }
+    if (searchInput.value && chooseInput.value) {
+      loadEvents(keyword, countryCode, currentPage);
+    }
+  });
+  paginationBox.appendChild(page);
+  page.classList.add('footer__page');
 }
 
 /*======================================================================================= */
 // funcion para dibujar el html en la pagina
+
 function renderEvents(item) {
   const imageUrl = item?.images.filter(item => item.width > 600)[0].url;
   const venueCity =
@@ -108,6 +212,7 @@ function renderEvents(item) {
 /* --- En esta parte se hace el primer cargado de elementos para mostar en la pagina ----*/
 /* ======================================================================================*/
 
+/*
 function loadRandom(currentPage) {
   eventsApi
     .getRandom(currentPage)
@@ -124,6 +229,31 @@ function loadRandom(currentPage) {
     .catch(error => {
       console.log(error);
     });
+}*/
+
+function loadRandom(currentPage) {
+  eventsApi
+    .getRandom(currentPage)
+    .then(result => {
+      const data = result._embedded.events;
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
+      data.forEach(item => {
+        const listItem = renderEvents(item);
+        gallery.appendChild(listItem);
+      });
+
+      pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
+      renderPagination(); // Actualiza los botones de paginación
+
+      if (data.length === 0) {
+        paginationBox.innerHTML = ''; // Vacía el contenido del contenedor si no hay eventos disponibles
+        Notiflix.Notify.warning('No hay eventos disponibles');
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
 }
 
 loadRandom(currentPage);
@@ -132,6 +262,7 @@ loadRandom(currentPage);
 /*--- aca cargamos data o elementos desde el boton buscar con una palab ra de busqueda --*/
 /* ======================================================================================*/
 
+/*
 function loadData(keyword, currentPage) {
   document.getElementById('gallery').innerHTML = '';
   eventsApi
@@ -144,6 +275,33 @@ function loadData(keyword, currentPage) {
           gallery.appendChild(listItem);
         });
       }
+
+      pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
+      renderPagination(); // Actualiza los botones de paginación
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}*/
+
+function loadData(keyword, currentPage) {
+  document.getElementById('gallery').innerHTML = '';
+  eventsApi
+    .getByKey(keyword, currentPage)
+    .then(result => {
+      if (result.page.totalElements) {
+        data = result._embedded.events;
+        data.forEach(item => {
+          const listItem = renderEvents(item);
+          gallery.appendChild(listItem);
+        });
+      } else {
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = '<p>No hay eventos disponibles</p>'; // Muestra un mensaje indicando que no hay eventos
+      }
+
+      pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
+      renderPagination(); // Actualiza los botones de paginación
     })
     .catch(error => {
       console.error(error);
@@ -156,20 +314,29 @@ function loadData(keyword, currentPage) {
 
 function loadCountry(countryCode, currentPage) {
   document.getElementById('gallery').innerHTML = '';
+  currentPage = 0;
   eventsApi
     .getByCountry(countryCode, currentPage)
     .then(result => {
-      const data = result._embedded && result._embedded.events ? result._embedded.events : [];//se modifico porque me salia no definida en consola, asi que le agregue esta verificacion, si result._embedded existe en result y si result._embedded.events existe en _embedded y si no estara vacio, [] el array,
+      const data =
+        result._embedded && result._embedded.events
+          ? result._embedded.events
+          : []; //se modifico porque me salia no definida en consola, asi que le agregue esta verificacion, si result._embedded existe en result y si result._embedded.events existe en _embedded y si no estara vacio, [] el array,
       if (data.length === 0) {
-        Notiflix.Notify.warning("No hay eventos en tu País");/* notiflix, se puso un condicional  */
-      }else{
-      const gallery = document.getElementById('gallery');
-      gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
-      data.forEach(item => {
-        const listItem = renderEvents(item);
-        gallery.appendChild(listItem);
-      });
-    }
+        Notiflix.Notify.warning(
+          'No hay eventos en tu País'
+        ); /* notiflix, se puso un condicional  */
+      } else {
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
+        data.forEach(item => {
+          const listItem = renderEvents(item);
+          gallery.appendChild(listItem);
+        });
+
+        pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
+        renderPagination(); // Actualiza los botones de paginación
+      }
     })
     .catch(error => {
       console.error(error);
@@ -185,17 +352,22 @@ function loadEvents(keyword, countryCode, currentPage) {
   eventsApi
     .getByKeyAndCountry(keyword, countryCode, currentPage)
     .then(result => {
-      const data = result._embedded && result._embedded.events ? result._embedded.events : [];
-      const gallery = document.getElementById('gallery');
-      gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
+      const data =
+        result._embedded && result._embedded.events
+          ? result._embedded.events
+          : [];
+
       if (data.length === 0) {
-        Notiflix.Notify.warning("No hay eventos para el artista en tu País");;
-        return;
+        Notiflix.Notify.warning('No hay eventos para el artista en tu País');
+      } else {
+        data.forEach(item => {
+          const listItem = renderEvents(item);
+          gallery.appendChild(listItem);
+        });
+
+        pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
+        renderPagination(); // Actualiza los botones de paginación
       }
-      data.forEach(item => {
-        const listItem = renderEvents(item);
-        gallery.appendChild(listItem);
-      });
     })
     .catch(error => {
       console.error(error);
