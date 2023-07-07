@@ -5,7 +5,6 @@ Notiflix.Notify.init();
 
 // hago una referencia al elemento del formulario y al campo de entrada
 const form = document.getElementById('search-form');
-const startBtn = document.getElementById('start-btn');
 let chooseInput = document.getElementById('choose');
 let searchInput = document.getElementById('search');
 
@@ -19,7 +18,9 @@ function validaForm() {
   const searchValue = searchInput.value;
 
   if (chooseValue.trim() === '' && searchValue.trim() === '') {
-    alert('Por favor, completa alguno de los campos del formulario.');
+    Notiflix.Notify.warning(
+      'Por favor, completa alguno de los campos del formulario.'
+    );
     return false;
   }
 
@@ -71,6 +72,10 @@ function addPaginationButton(pageNumber) {
   const page = document.createElement('button');
   page.textContent = pageNumber;
   page.setAttribute('data-page', pageNumber); // Asigna el número de página como atributo personalizado
+  // Verificar si el número de página actual coincide con el número del botón
+  if (currentPage === pageNumber - 1) {
+    page.classList.add('active'); // Agrega la clase de estilo para el botón activo
+  }
   page.addEventListener('click', event => {
     const selectedPage = parseInt(event.target.textContent);
     currentPage = selectedPage - 1;
@@ -175,7 +180,8 @@ function loadData(keyword, currentPage) {
         });
       } else {
         const gallery = document.getElementById('gallery');
-        gallery.innerHTML = '<p>No hay eventos disponibles</p>'; // Muestra un mensaje indicando que no hay eventos
+        // gallery.innerHTML = '<p>No hay eventos disponibles</p>'; // Muestra un mensaje indicando que no hay eventos
+        Notiflix.Notify.warning('No se encontraron eventos disponibles');
       }
 
       pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
@@ -252,57 +258,28 @@ function loadEvents(keyword, countryCode, currentPage) {
     });
 }
 
-startBtn.addEventListener('click', () => {
+form.addEventListener('submit', e => {
+  e.preventDefault(); // Evitar que el formulario se envíe automáticamente
   if (validaForm()) {
-    if (
-      document.querySelector('#choose').value !== '' &&
-      document.querySelector('#search').value
-    ) {
-      loadEvents(
-        document.querySelector('#search').value,
-        document.querySelector('#choose').value
-      );
-      // searchInput.value = ''; //eliminar contenido
-    } else if (
-      !document.querySelector('#search').value &&
-      document.querySelector('#choose').value
-    ) {
-      loadCountry(document.querySelector('#choose').value);
-    } else if (
-      document.querySelector('#search').value &&
-      !document.querySelector('#choose').value
-    ) {
-      loadData(document.querySelector('#search').value);
+    currentPage = 0; // Restablecer currentPage a 0
+    if (chooseInput.value !== '' && searchInput.value !== '') {
+      loadEvents(searchInput.value, chooseInput.value);
+    } else if (chooseInput.value !== '' && searchInput.value === '') {
+      loadCountry(chooseInput.value);
+    } else if (chooseInput.value === '' && searchInput.value !== '') {
+      loadData(searchInput.value);
     }
   }
 });
 
 chooseInput.addEventListener('change', () => {
   if (validaForm()) {
-    if (
-      document.querySelector('#choose').value !== '' &&
-      document.querySelector('#search').value
-    ) {
-      loadEvents(
-        document.querySelector('#search').value,
-        document.querySelector('#choose').value
-      );
-      // searchInput.value = ''; //eliminar contenido
-    } else if (
-      !document.querySelector('#search').value &&
-      document.querySelector('#choose').value
-    ) {
-      loadCountry(document.querySelector('#choose').value);
-    } else if (
-      document.querySelector('#search').value &&
-      !document.querySelector('#choose').value
-    ) {
-      loadData(document.querySelector('#search').value);
+    if (chooseInput.value !== '' && searchInput.value !== '') {
+      loadEvents(searchInput.value, chooseInput.value);
+    } else if (chooseInput.value !== '' && searchInput.value === '') {
+      loadCountry(chooseInput.value);
+    } else if (chooseInput.value === '' && searchInput.value !== '') {
+      loadData(searchInput.value);
     }
   }
-
-  // currentPage = 1;
-  // page.textContent = 1;
-  // pagePrev.textContent = 2;
-  // pageNext.textContent = 3;
 });

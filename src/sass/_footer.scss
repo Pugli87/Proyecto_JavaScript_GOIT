@@ -54,6 +54,7 @@
     //border: 1px solid #dc56c5;
     border-radius: 10px 0;
     font-size: 16px;
+    margin: 60px 0;
 
     line-height: 20px;
     background-color: #93939300;
@@ -63,6 +64,11 @@
     }
     &:hover {
       border: 3px solid #dc56c5;
+    }
+    &.active {
+      border: 3px solid #dc56c5;
+      box-shadow: 0 0 10px 5px rgba(220, 86, 197, 0.5);
+      transform: scale(1.5);
     }
   }
 
@@ -88,6 +94,9 @@
       padding-bottom: 15px;
       font-size: 16px;
       line-height: 19.5px;
+    }
+    &__page {
+      margin: 80px 0;
     }
   }
 }
