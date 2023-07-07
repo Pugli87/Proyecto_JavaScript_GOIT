@@ -45,9 +45,11 @@
 
   &__page {
     cursor: pointer;
-    width: 25px;
+    padding: 15px;
+    width: auto;
     height: 25px;
     display: flex;
+    padding: 0 5px;
     color: #dc56c5;
     align-items: center;
     justify-content: center;
@@ -60,15 +62,16 @@
     background-color: #93939300;
 
     &:not(:last-child) {
-      margin-right: 15px;
+      margin-right: 8px;
     }
     &:hover {
-      border: 3px solid #dc56c5;
+      transform: scale(1.1);
+      border: 1px solid #dc56c5;
     }
     &.active {
-      border: 3px solid #dc56c5;
+      border: 1px solid #dc56c5;
       box-shadow: 0 0 10px 5px rgba(220, 86, 197, 0.5);
-      transform: scale(1.5);
+      transform: scale(1.2);
     }
   }
 
