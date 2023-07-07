@@ -30,7 +30,8 @@ function validaForm() {
 /* ===================================================================================== */
 /* -------------- Estas dos funciones son para la paginacion de la pagina -------------- */
 /* ===================================================================================== */
-/*
+
+/* paginacion funcional sin bontones de primera pagina y ultima pagina
 function renderPagination() {
   if (pagination.totalPages !== undefined && pagination.totalElements > 0) {
     const maxButtons = 5; // Número máximo de botones de paginación a mostrar
@@ -100,83 +101,8 @@ function addPaginationButton(pageNumber) {
   });
   paginationBox.appendChild(page);
   page.classList.add('footer__page');
-}*/
-
-/* funcionabilidad de primera pagina y ultima pagina pero error en la data en la ultima
-function renderPagination() {
-  if (pagination.totalPages !== undefined && pagination.totalElements > 0) {
-    const maxButtons = 6; // Número máximo de botones de paginación a mostrar
-    const totalPages = pagination.totalPages;
-    let startPage, endPage;
-
-    if (totalPages <= maxButtons) {
-      // Si el número de páginas es menor o igual al número máximo de botones
-      startPage = 1;
-      endPage = totalPages;
-    } else {
-      // Si hay más páginas que el número máximo de botones
-      if (currentPage <= Math.floor(maxButtons / 2)) {
-        // Si estamos en las primeras páginas
-        startPage = 1;
-        endPage = maxButtons;
-      } else if (currentPage >= totalPages - Math.floor(maxButtons / 2)) {
-        // Si estamos en las últimas páginas
-        startPage = totalPages - maxButtons + 1;
-        endPage = totalPages;
-      } else {
-        // Si estamos en páginas intermedias
-        startPage = currentPage - Math.floor(maxButtons / 2);
-        endPage = currentPage - 1 + Math.ceil(maxButtons / 2) - 1;
-      }
-    }
-
-    paginationBox.innerHTML = ''; // Vacía el contenido del contenedor antes de agregar los nuevos botones
-
-    addPaginationButton(1);
-    for (let i = startPage + 1; i <= endPage - 1; i++) {
-      addPaginationButton(i);
-    }
-    addPaginationButton(totalPages);
-  } else {
-    paginationBox.innerHTML = ''; // Vacía el contenido del contenedor si no hay eventos disponibles
-  }
 }
-
-function addPaginationButton(pageNumber) {
-  const page = document.createElement('button');
-  page.textContent = pageNumber;
-  page.setAttribute('data-page', pageNumber); // Asigna el número de página como atributo personalizado
-  page.addEventListener('click', event => {
-    const selectedPage = parseInt(event.target.textContent);
-    currentPage = selectedPage - 1;
-    renderPagination();
-    window.scrollTo(0, 0); // Desplazarse al principio de la página después de cambiar de página
-    console.log(`Botón ${selectedPage} seleccionado`);
-    keyword = document.querySelector('#search').value;
-    countryCode = chooseInput.value; // Obtener el valor de countryCode desde chooseInput
-    if (!searchInput.value && !chooseInput.value) {
-      console.log('Pagina actual', currentPage);
-      loadRandom(currentPage);
-    }
-    if (searchInput.value && !chooseInput.value) {
-      loadData(keyword, currentPage);
-    }
-    if (!searchInput.value && chooseInput.value) {
-      loadCountry(countryCode, currentPage);
-    }
-    if (searchInput.value && chooseInput.value) {
-      loadEvents(keyword, countryCode, currentPage);
-    }
-  });
-
-  // Verificar si el número de página actual coincide con el número del botón
-  if (currentPage === pageNumber - 1) {
-    page.classList.add('active'); // Agrega la clase de estilo para el botón activo
-  }
-
-  paginationBox.appendChild(page);
-  page.classList.add('footer__page');
-}*/
+*/
 
 function renderPagination() {
   if (pagination.totalPages !== undefined && pagination.totalElements > 0) {
