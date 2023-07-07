@@ -314,7 +314,7 @@ function loadData(keyword, currentPage) {
 
 function loadCountry(countryCode, currentPage) {
   document.getElementById('gallery').innerHTML = '';
-  currentPage = 0;
+  currentPage = currentPage || 0; // Establece currentPage en 0 si no se proporciona un valor
   eventsApi
     .getByCountry(countryCode, currentPage)
     .then(result => {
