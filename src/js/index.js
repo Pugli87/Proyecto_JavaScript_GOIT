@@ -252,52 +252,28 @@ function loadEvents(keyword, countryCode, currentPage) {
     });
 }
 
-startBtn.addEventListener('click', () => {
+form.addEventListener('submit', event => {
+  event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+
   if (validaForm()) {
-    if (
-      document.querySelector('#choose').value !== '' &&
-      document.querySelector('#search').value
-    ) {
-      loadEvents(
-        document.querySelector('#search').value,
-        document.querySelector('#choose').value
-      );
-      // searchInput.value = ''; //eliminar contenido
-    } else if (
-      !document.querySelector('#search').value &&
-      document.querySelector('#choose').value
-    ) {
-      loadCountry(document.querySelector('#choose').value);
-    } else if (
-      document.querySelector('#search').value &&
-      !document.querySelector('#choose').value
-    ) {
-      loadData(document.querySelector('#search').value);
+    if (chooseInput.value !== '' && searchInput.value !== '') {
+      loadEvents(searchInput.value, chooseInput.value);
+    } else if (chooseInput.value !== '' && searchInput.value === '') {
+      loadCountry(chooseInput.value);
+    } else if (chooseInput.value === '' && searchInput.value !== '') {
+      loadData(searchInput.value);
     }
   }
 });
 
 chooseInput.addEventListener('change', () => {
   if (validaForm()) {
-    if (
-      document.querySelector('#choose').value !== '' &&
-      document.querySelector('#search').value
-    ) {
-      loadEvents(
-        document.querySelector('#search').value,
-        document.querySelector('#choose').value
-      );
-      // searchInput.value = ''; //eliminar contenido
-    } else if (
-      !document.querySelector('#search').value &&
-      document.querySelector('#choose').value
-    ) {
-      loadCountry(document.querySelector('#choose').value);
-    } else if (
-      document.querySelector('#search').value &&
-      !document.querySelector('#choose').value
-    ) {
-      loadData(document.querySelector('#search').value);
+    if (chooseInput.value !== '' && searchInput.value !== '') {
+      loadEvents(searchInput.value, chooseInput.value);
+    } else if (chooseInput.value !== '' && searchInput.value === '') {
+      loadCountry(chooseInput.value);
+    } else if (chooseInput.value === '' && searchInput.value !== '') {
+      loadData(searchInput.value);
     }
   }
 });
