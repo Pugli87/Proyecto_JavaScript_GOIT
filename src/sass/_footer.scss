@@ -49,12 +49,12 @@
     width: auto;
     height: 25px;
     display: flex;
-    padding: 0 5px;
-    color: #dc56c5;
+    padding: 15px;
+    color: #ffff;
     align-items: center;
     justify-content: center;
+    border: 0;
     //border: 1px solid #dc56c5;
-    border-radius: 10px 0;
     font-size: 16px;
     margin: 60px 0;
 
@@ -65,13 +65,25 @@
       margin-right: 8px;
     }
     &:hover {
-      transform: scale(1.1);
+      transform: scale(1.2);
       border: 1px solid #dc56c5;
+      border-radius: 10px 0;
     }
     &.active {
+      border-radius: 10px 0;
       border: 1px solid #dc56c5;
       box-shadow: 0 0 10px 5px rgba(220, 86, 197, 0.5);
       transform: scale(1.2);
+    }
+  }
+  &__spam {
+    cursor: none;
+    border: none;
+    background-color: transparent;
+    color: #ffff;
+    &:hover {
+      border: 0;
+      border-radius: 0;
     }
   }
 
