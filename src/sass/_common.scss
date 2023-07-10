@@ -2,20 +2,20 @@
 *,
 ::after,
 ::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-style: normal;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-style: normal;
 }
 
-body {
-  background-color: black;
-  font-family: 'Montserrat';
-  min-width: 320px;
+body{
+    background-color: black;
+    font-family: 'Montserrat';
+    min-width: 320px;
 }
 
 img {
-  display: block;
-  max-width: 100%;
-  height: auto;
+    display: block;
+    max-width: 100%;
+    height: auto;
 }
