@@ -1,1 +1,21 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-style: normal;
+}
+
+body {
+  background-color: black;
+  font-family: 'Montserrat';
+  min-width: 320px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

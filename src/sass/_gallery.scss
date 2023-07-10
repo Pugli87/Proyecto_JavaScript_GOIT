@@ -1,0 +1,106 @@
+.gallery {
+  background-color: rgba(0, 0, 0, 0);
+  width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+
+  &__container {
+    //div
+    margin-top: -60px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__target {
+    //ul
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style: none;
+  }
+
+  &__item {
+    // card
+    text-align: center;
+    flex-basis: calc((100% - 4px) / 2);
+    //flex-basis: calc((100% - 8px)/3); //TABLET
+    //flex-basis: calc((100% - 12px)/4); //DESKTOP
+
+    &:not(:last-child) {
+      margin-bottom: 39px;
+    }
+  }
+
+  &__img {
+    position: relative;
+    width: 180px;
+    height: 161px;
+    border-radius: 50px 0 50px 0;
+
+    &::after {
+      content: '';
+      //position: absolute;
+      //top: 20px;
+      //left: 50px;
+      width: 153px;
+      height: 143px;
+      background-color: rgb(255, 255, 255);
+      /* Color de fondo del pseudo-elemento */
+      border: 1px solid #dc56c693;
+    }
+  }
+
+  &__name {
+    width: 128px;
+    color: #dc56c5;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17.07px;
+    text-align: center;
+  }
+
+  &__date {
+    color: white;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17.07px;
+  }
+
+  &__city {
+    color: white;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+}
+
+/* agregue estilos a tablet y desktop (mobile se modifico solo el espacio entre imagenes) */
+
+@media (min-width: 768px) {
+  .gallery {
+    width: 610px;
+    &__item {
+      flex-basis: calc((100% - 8px) / 3);
+      &__img {
+        width: 180px;
+        height: 227px;
+        margin: 0 auto;
+      }
+    }
+  }
+  @media (min-width: 1280px) {
+    .gallery {
+      width: 946px;
+      &__item {
+        flex-basis: calc((100% - 12px) / 4);
+      }
+      &__img {
+        width: 194px;
+        height: 250px;
+        margin: 0 auto;
+      }
+    }
+  }
+}
