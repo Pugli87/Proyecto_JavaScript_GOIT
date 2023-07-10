@@ -30,119 +30,6 @@ function validaForm() {
 /* ===================================================================================== */
 /* -------------- Estas dos funciones son para la paginacion de la pagina -------------- */
 /* ===================================================================================== */
-/*
-function renderPagination() {
-  if (pagination.totalPages !== undefined && pagination.totalElements > 0) {
-    const maxButtons = 5; // Número máximo de botones de paginación a mostrar
-    const totalPages = pagination.totalPages;
-    let startPage, endPage;
-
-    //const maxButtons = 5; // Número máximo de botones a mostrar
-    //let startPage, endPage;
-
-    if (totalPages <= maxButtons) {
-      // Si el número de páginas es menor o igual al número máximo de botones
-      startPage = 1;
-      endPage = totalPages;
-    } else {
-      startPage = Math.max(currentPage - 2, 1); // Establece la página inicial, máximo 2 páginas antes de la página actual
-      endPage = Math.min(startPage + maxButtons - 1, totalPages); // Establece la página final, máximo el número de botones permitido o la última página disponible
-    }
-
-    // Renderizar los botones de paginación desde startPage hasta endPage
-    for (let i = startPage; i <= endPage; i++) {
-      // Código para agregar botones de paginación
-    }
-
-    paginationBox.innerHTML = ''; // Vacía el contenido del contenedor antes de agregar los nuevos botones
-
-    addPaginationButton('<');
-
-    if (startPage > 1) {
-      addPaginationButton('...');
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      addPaginationButton(i);
-    }
-
-    if (endPage < totalPages) {
-      addPaginationButton('...');
-    }
-
-    addPaginationButton('>');
-  } else {
-    paginationBox.innerHTML = ''; // Vacía el contenido del contenedor si no hay eventos disponibles
-  }
-}
-
-function addPaginationButton(pageNumber) {
-  const page =
-    pageNumber === '...'
-      ? document.createElement('span')
-      : document.createElement('button');
-  page.textContent = pageNumber;
-
-  if (pageNumber === '<') {
-    page.setAttribute('data-page', 'prev');
-  } else if (pageNumber === '>') {
-    page.setAttribute('data-page', 'next');
-  } else {
-    page.setAttribute('data-page', pageNumber);
-  }
-
-  if (page.textContent !== '...') {
-    page.addEventListener('click', event => {
-      const selectedPage = event.target.getAttribute('data-page');
-
-      if (selectedPage === 'prev') {
-        currentPage = 0; // Desplazarse 5 páginas hacia atrás, asegurándose de no ser menor que 0
-      } else if (selectedPage === 'next') {
-        currentPage += 10;
-        if (currentPage >= pagination.totalPages) {
-          currentPage = pagination.totalPages - 1;
-        }
-      } else {
-        currentPage = parseInt(selectedPage) - 1;
-      }
-
-      renderPagination();
-      window.scrollTo(0, 0);
-      console.log(`Botón ${selectedPage} seleccionado`);
-      keyword = document.querySelector('#search').value;
-      countryCode = chooseInput.value;
-
-      if (searchInput.value && !chooseInput.value) {
-        loadData(keyword, currentPage);
-      }
-      if (!searchInput.value && chooseInput.value) {
-        loadCountry(countryCode, currentPage);
-      }
-      if (searchInput.value && chooseInput.value) {
-        loadEvents(keyword, countryCode, currentPage);
-      }
-    });
-  } else {
-    page.classList.add('footer__spam'); // Agrega la clase CSS al botón de los tres puntos
-  }
-
-  if (currentPage === pageNumber - 1) {
-    page.classList.add('active');
-  }
-
-  // Desactivar el botón "Anterior" cuando se encuentra en la primera página
-  if (pageNumber === '<' && currentPage === 0) {
-    page.disabled = true;
-  }
-
-  // Desactivar el botón "Siguiente" cuando se llega a la última página
-  if (pageNumber === '>' && currentPage >= pagination.totalPages - 1) {
-    page.disabled = true;
-  }
-
-  paginationBox.appendChild(page);
-  page.classList.add('footer__page');
-}*/
 
 function renderPagination() {
   if (pagination.totalPages !== undefined && pagination.totalElements > 0) {
@@ -284,37 +171,6 @@ function renderEvents(item) {
 }
 
 /* ======================================================================================*/
-/* --- En esta parte se hace el primer cargado de elementos para mostar en la pagina ----*/
-/* ======================================================================================*/
-/*
-function loadRandom(currentPage) {
-  eventsApi
-    .getRandom(currentPage)
-    .then(result => {
-      const data = result._embedded.events;
-      const gallery = document.getElementById('gallery');
-      gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
-      data.forEach(item => {
-        const listItem = renderEvents(item);
-        gallery.appendChild(listItem);
-      });
-
-      pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
-      renderPagination(); // Actualiza los botones de paginación
-
-      if (data.length === 0) {
-        paginationBox.innerHTML = ''; // Vacía el contenido del contenedor si no hay eventos disponibles
-        Notiflix.Notify.warning('No hay eventos disponibles');
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
-}
-
-loadRandom(currentPage);
-*/
-/* ======================================================================================*/
 /*--- aca cargamos data o elementos desde el boton buscar con una palab ra de busqueda --*/
 /* ======================================================================================*/
 
@@ -342,41 +198,7 @@ function loadData(keyword, currentPage) {
       console.error(error);
     });
 }
-loadData('US', '0');
-/*
-function loadData(keyword, currentPage) {
-  document.getElementById('gallery').innerHTML = '';
-  eventsApi
-    .getByKey(keyword, currentPage)
-    .then(result => {
-      let totalPages =
-        result.pagination && result.pagination.totalPages
-          ? result.pagination.totalPages
-          : 0;
-
-      if (totalPages > 0) {
-        data = result._embedded.events;
-        data.forEach(item => {
-          const listItem = renderEvents(item);
-          gallery.appendChild(listItem);
-        });
-      } else {
-        const gallery = document.getElementById('gallery');
-        gallery.innerHTML = '<p>No hay eventos disponibles</p>'; // Muestra un mensaje indicando que no hay eventos
-      }
-
-      pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
-      renderPagination(); // Actualiza los botones de paginación
-    })
-    .catch(error => {
-      if (error.response && error.response.status === 404) {
-        console.log('Error 404: No se encontraron resultados');
-        // Maneja el caso de error 404, por ejemplo, mostrando un mensaje al usuario
-      } else {
-        console.error(error);
-      }
-    });
-}*/
+loadData('US', '0'); // primer cargado de eventos de la pagina
 
 /* ====================================================================================== */
 /* ------------------ le hago pruebas a eventos llamados por country -------------------- */
