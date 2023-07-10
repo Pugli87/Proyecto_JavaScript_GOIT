@@ -1,0 +1,116 @@
+.footer {
+  background-color: black;
+  padding: 27px;
+
+  &__pag {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+
+  &__btn {
+    cursor: pointer;
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: #ffffff;
+    border-radius: 10px 0;
+    width: 40px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    transition: 0.3s border ease-in-out, 0.3s color ease-in-out;
+
+    &:hover {
+      border: 1px solid #dc56c5;
+      color: #dc56c5;
+    }
+  }
+
+  &__svg {
+    fill: #dc56c5;
+  }
+
+  &__pages {
+    display: flex;
+  }
+
+  &__page {
+    cursor: pointer;
+    width: auto;
+    height: 25px;
+    display: flex;
+    padding: 5px;
+    color: #ffff;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    //border: 1px solid #dc56c5;
+    font-size: 16px;
+    margin: 60px 0;
+
+    line-height: 20px;
+    background-color: #93939300;
+
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+    &:hover {
+      transform: scale(1.2);
+      border: 1px solid #dc56c5;
+      border-radius: 10px 0;
+    }
+    &.active {
+      border-radius: 10px 0;
+      border: 1px solid #dc56c5;
+      box-shadow: 0 0 10px 5px rgba(220, 86, 197, 0.5);
+      transform: scale(1.2);
+    }
+  }
+  &__spam {
+    cursor: none;
+    border: none;
+    background-color: transparent;
+    color: #ffff;
+    &:hover {
+      border: 0;
+      border-radius: 0;
+    }
+  }
+
+  &__p {
+    width: 252px;
+    height: 34px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17.07px;
+    text-align: center;
+    color: #939393;
+  }
+}
+
+@media (min-width: 768px) {
+  .footer {
+    background-color: black;
+    &__p {
+      width: 521px;
+      height: 20px;
+      padding-bottom: 15px;
+      font-size: 16px;
+      line-height: 19.5px;
+    }
+    &__page {
+      margin: 80px 0;
+    }
+  }
+}
