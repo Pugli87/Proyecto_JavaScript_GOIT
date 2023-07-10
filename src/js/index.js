@@ -106,6 +106,9 @@ function addPaginationButton(pageNumber) {
       keyword = document.querySelector('#search').value;
       countryCode = chooseInput.value;
 
+      if (!searchInput.value && !chooseInput.value) {
+        loadData('US', currentPage);
+      }
       if (searchInput.value && !chooseInput.value) {
         loadData(keyword, currentPage);
       }
