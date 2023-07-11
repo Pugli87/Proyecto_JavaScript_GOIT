@@ -1,4 +1,5 @@
 import eventsApi from './eventsApi';
+import { getByKey } from './eventsApi';
 /* notiflix */
 import Notiflix from 'notiflix';
 Notiflix.Notify.init();
@@ -179,8 +180,7 @@ function renderEvents(item) {
 
 function loadData(keyword, currentPage) {
   document.getElementById('gallery').innerHTML = '';
-  eventsApi
-    .getByKey(keyword, currentPage)
+  getByKey(keyword, currentPage)
     .then(result => {
       if (result.page.totalElements) {
         data = result._embedded.events;
