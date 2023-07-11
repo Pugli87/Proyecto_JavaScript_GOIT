@@ -87,9 +87,9 @@
 @media (min-width: 768px) {
   .gallery {
     width: 610px;
-    &__target {
+    /*&__target {
       // gap: 13px;
-    }
+    }*/
 
     &__item {
       flex-basis: calc((100% - 60px) / 3);
