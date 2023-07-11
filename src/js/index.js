@@ -1,5 +1,5 @@
 import eventsApi from './eventsApi';
-import { getByKey } from './eventsApi';
+import { getByKey, pagination } from './eventsApi';
 /* notiflix */
 import Notiflix from 'notiflix';
 Notiflix.Notify.init();
