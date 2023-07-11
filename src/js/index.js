@@ -1,5 +1,5 @@
+'use strict';
 import eventsApi from './eventsApi';
-import { getByKey, pagination } from './eventsApi';
 /* notiflix */
 import Notiflix from 'notiflix';
 Notiflix.Notify.init();
@@ -12,6 +12,7 @@ let searchInput = document.getElementById('search');
 //document.querySelector('#choose').value;
 let data = [];
 let currentPage = 0;
+let pagination = {};
 let keyword = ''; // Variable global para almacenar la palabra clave de búsqueda
 const paginationBox = document.getElementById('pages');
 function validaForm() {
