@@ -201,7 +201,7 @@ function loadData(keyword, currentPage) {
       console.error(error);
     });
 }
-loadData('US', '0'); // primer cargado de eventos de la pagina
+loadData('US', 0); // primer cargado de eventos de la pagina
 
 /* ====================================================================================== */
 /* ------------------ le hago pruebas a eventos llamados por country -------------------- */
