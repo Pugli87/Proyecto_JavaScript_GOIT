@@ -1,4 +1,3 @@
-'use strict';
 import eventsApi from './eventsApi';
 /* notiflix */
 import Notiflix from 'notiflix';
@@ -181,7 +180,8 @@ function renderEvents(item) {
 
 function loadData(keyword, currentPage) {
   document.getElementById('gallery').innerHTML = '';
-  getByKey(keyword, currentPage)
+  eventsApi
+    .getByKey(keyword, currentPage)
     .then(result => {
       if (result.page.totalElements) {
         data = result._embedded.events;
