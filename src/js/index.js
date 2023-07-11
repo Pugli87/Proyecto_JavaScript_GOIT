@@ -2,6 +2,8 @@ import eventsApi from '../js/eventsApi';
 /* notiflix */
 import Notiflix from 'notiflix';
 Notiflix.Notify.init();
+import * as basicLightbox from 'basiclightbox';
+
 
 // hago una referencia al elemento del formulario y al campo de entrada
 const form = document.getElementById('search-form');
@@ -167,6 +169,7 @@ function renderEvents(item) {
       ${venueCity}
     </span> <br/>
   `;
+
   return listItem;
 }
 
@@ -290,5 +293,65 @@ chooseInput.addEventListener('change', () => {
     } else if (chooseInput.value === '' && searchInput.value !== '') {
       loadData(searchInput.value);
     }
+  }
+});
+
+/* modal */
+function openModal(imageUrl, eventName, eventDate, eventCity, ) {
+  const modal = basicLightbox.create(`
+    <div class="modal">
+      <div class="modal__1">
+        <img class="modal__img-c" src="${imageUrl}" alt=""/>
+      </div>
+      <div class="modal__2">
+        <img class="modal__img" src="${imageUrl}" alt=""/>
+      </div>
+      <div class="modal__3">
+        <div class="modal__info">
+          
+          <p class="modal__name"><span class="modal__name-1">WHO<br></span>${eventName}</p>
+          <p class="modal__name"><span class="modal__name-1-when">WHEN<br></span>${eventDate}<span class="modal__hour">${eventDate.hour}</span><br></p>
+          <p class="modal__name"><span class="modal__name-1">WHERE<br></span>${eventCity}</p>
+          <p class="modal__name"><span class="modal__name-1">PRICES<br></span>0000</p>
+          <button class="modal__button" onclick="window.open('https://www.ticketmaster.com/')">Buy Tickets</button>
+        </div>
+      </div>
+    </div>
+    const gallery = document.getElementById('gallery');
+gallery.addEventListener('click', e => {
+  if (e.target.classList.contains('gallery__img')) {
+    const listItem = e.target.closest('.gallery__item');
+    const imageUrl = listItem.querySelector('.gallery__img').src;
+    const eventName = listItem.querySelector('.gallery__name').textContent;
+    const eventDate = listItem.querySelector('.gallery__date').textContent;
+    const eventCityElement = listItem.querySelector('.gallery__city');
+    const eventCity = eventCityElement ? eventCityElement.lastChild.textContent.trim() : '';
+
+    openModal(imageUrl, eventName, eventDate, eventCity);
+  }
+});
+
+  `);
+  modal.show();
+  /* cerrar modal */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      modal.close();
+    }
+  });
+}
+
+
+const gallery = document.getElementById('gallery');
+gallery.addEventListener('click', e => {
+  if (e.target.classList.contains('gallery__img')) {
+    const listItem = e.target.closest('.gallery__item');
+    const imageUrl = listItem.querySelector('.gallery__img').src;
+    const eventName = listItem.querySelector('.gallery__name').textContent;
+    const eventDate = listItem.querySelector('.gallery__date').textContent;
+    const eventCity = listItem.querySelector('.gallery__city').textContent;
+    
+
+    openModal(imageUrl, eventName, eventDate, eventCity, );
   }
 });

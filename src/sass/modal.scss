@@ -1,4 +1,5 @@
-@media screen and (min-width: 320px){
+@media screen and (min-width: 320px) {
+
     // ==================================================== modals ===================================================================
     .modal {
         display: none;
@@ -10,8 +11,9 @@
         width: 100%;
         height: 100%;
         margin: 0 auto;
-        justify-content: center;       
+        justify-content: center;
         z-index: 3;
+
         &-window {
             position: relative;
             top: 2%;
@@ -38,13 +40,13 @@
         }
     }
 
-    .head-image{
+    .head-image {
         height: 120px;
         display: flex;
         justify-content: center;
         align-items: center;
         object-fit: initial;
-        
+
         & img {
             object-fit: initial;
             height: 90px;
@@ -61,7 +63,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        
+
         & h2 {
             font-family: 'Montserrat';
             font-style: normal;
@@ -83,9 +85,12 @@
             color: #0E0E0E;
             margin-top: 5px;
             width: 243px;
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-            &::-webkit-scrollbar{
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+
+            /* Firefox */
+            &::-webkit-scrollbar {
                 display: none;
             }
         }
@@ -217,7 +222,7 @@
             font-weight: 400;
             font-size: 16px;
             color: #0E0E0E;
-        } 
+        }
     }
 
     .buy-tickets {
@@ -233,7 +238,8 @@
         margin-top: 10px;
         transition: color .3s ease-in-out, background-color .3s ease-in-out, border-color .3s ease-in-out;
 
-        &:active, &:hover {
+        &:active,
+        &:hover {
             color: #4C00FE;
             background-color: #FFFFFF;
             border-color: #4C00FE;
@@ -256,49 +262,57 @@
             margin-left: 13px;
             transition: border .3s ease-in-out;
 
-            &:active, &:hover {
+            &:active,
+            &:hover {
                 border: 1px solid #DC56C5;
             }
         }
     }
-// =================================================================================================================
 
-    .main-section1{
+    // =================================================================================================================
+
+    .main-section1 {
         display: flex;
         justify-content: center;
     }
-    .list-cards{
+
+    .list-cards {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         width: 320px;
     }
-    .event{
+
+    .event {
         width: 138px;
         height: 242px;
         list-style: none;
         padding: 10px 9px 0 0;
         margin-bottom: 40px;
         // overflow: scroll;
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
         // transition: trasnslateY() 5s ease-out;
         transition-property: transform;
         transition-duration: 300ms;
         transition-timing-function: ease-out;
-    
+
         &::-webkit-scrollbar {
             display: none;
         }
-        &:hover{
+
+        &:hover {
             transform: translateY(-8);
         }
-        &:nth-child(odd){
+
+        &:nth-child(odd) {
             margin-left: 10px;
         }
     }
 
-    .ramka-event{
+    .ramka-event {
         pointer-events: none;
         width: 108px;
         height: 101px;
@@ -310,7 +324,8 @@
         position: relative;
         z-index: 0;
     }
-    .event img{
+
+    .event img {
         object-fit: cover;
         width: 128px;
         height: 161px;
@@ -319,7 +334,8 @@
         position: relative;
         z-index: 1;
     }
-    .event-name{
+
+    .event-name {
         min-height: 20px;
         max-height: 45px;
         font-family: 'Montserrat';
@@ -331,13 +347,17 @@
         color: #DC56C5;
         margin-top: 5px;
         overflow-y: scroll;
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+
+        /* Firefox */
         &::-webkit-scrollbar {
             display: none;
         }
     }
-    .event-h4{
+
+    .event-h4 {
         // height: 14px;
         font-family: 'Montserrat';
         font-style: normal;
@@ -348,7 +368,8 @@
         color: #FFFFFF;
         margin: 5px 0;
     }
-    .event-location{
+
+    .event-location {
         // height: 12px;
         font-family: 'Montserrat';
         font-style: normal;
@@ -359,16 +380,17 @@
         text-align: center;
     }
 
-    
+}
 
 
 
-@media screen and (min-width: 768px){
-// ==================================================== modals ===================================================================
+@media screen and (min-width: 768px) {
+
+    // ==================================================== modals ===================================================================
     .modal-window {
         width: 595px;
         height: 831px;
-        
+
     }
 
     .svg-close {
@@ -427,45 +449,53 @@
         margin-top: 13px;
         margin-left: 165px;
     }
-// =======================================================================================================================
 
-    .list-cards{
+    // =======================================================================================================================
+
+    .list-cards {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         width: 650px;
     }
-    .event{
+
+    .event {
         width: 196px;
         height: 312px;
         list-style: none;
         padding: 13px 14px 0 0;
         margin-bottom: 60px;
     }
-    .event:nth-child(odd){
+
+    .event:nth-child(odd) {
         margin-left: 0;
     }
-    .ramka-event{
+
+    .ramka-event {
         width: 153px;
         height: 143px;
         margin-bottom: -130px;
         margin-left: 40px;
     }
-    .event img{
+
+    .event img {
         width: 180px;
         height: 227px;
     }
-    .event-name{
+
+    .event-name {
         // height: 20px;
         font-size: 16px;
         line-height: 20px;
         max-height: 55px;
     }
-    .event-h4{
+
+    .event-h4 {
         // height: 20px;
         font-size: 16px;
         line-height: 20px;
     }
+
     .event-location {
         // height: 17px;
         font-size: 14px;
@@ -474,8 +504,9 @@
 }
 
 
-@media screen and (min-width: 1200px){
-// ==================================================== modals ===================================================================
+@media screen and (min-width: 1200px) {
+
+    // ==================================================== modals ===================================================================
     .modal-window {
         width: 930px;
         height: 1023px;
@@ -498,13 +529,13 @@
             font-size: 24px;
             line-height: 29px;
         }
-        
+
         & p {
             font-style: normal;
             font-weight: 400;
             font-size: 18px;
             width: 450px;
-            height: 66px;   
+            height: 66px;
         }
     }
 
@@ -550,7 +581,7 @@
         & p {
             font-size: 18px;
         }
-    } 
+    }
 
     .buy-tickets {
         margin-top: 20px;
@@ -561,31 +592,37 @@
         margin-left: 357px;
         margin-top: 45px;
     }
-// =======================================================================================================================
 
-    .list-cards{
+    // =======================================================================================================================
+
+    .list-cards {
         width: 1112px;
     }
-    .event{
+
+    .event {
         margin-bottom: 50px;
         margin-right: 56px;
     }
-    .event-name{
+
+    .event-name {
         // height: 60px;
         font-size: 16px;
         line-height: 20px;
     }
-    .event-h4{
+
+    .event-h4 {
         // height: 20px;
         font-size: 16px;
         line-height: 20px;
     }
+
     .event-location {
         // height: 17px;
         font-size: 14px;
         line-height: 17px;
     }
-    .event:nth-child(4n){
+
+    .event:nth-child(4n) {
         margin-right: 0;
     }
 }
