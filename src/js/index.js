@@ -1,4 +1,4 @@
-import eventsApi from './js/eventsApi';
+import eventsApi from './eventsApi';
 /* notiflix */
 import Notiflix from 'notiflix';
 Notiflix.Notify.init();
