@@ -1,5 +1,4 @@
-import eventsApi from './eventsApi';
-import { getByKey } from './eventsApi';
+import getEvents from './eventsApi';
 
 /* notiflix */
 import Notiflix from 'notiflix';
@@ -182,7 +181,7 @@ function renderEvents(item) {
 
 function loadData(keyword, currentPage) {
   document.getElementById('gallery').innerHTML = '';
-  getByKey(keyword, currentPage)
+  getEvents(currentPage, { keyword })
     .then(result => {
       if (result.page.totalElements) {
         data = result._embedded.events;
@@ -211,8 +210,8 @@ function loadData(keyword, currentPage) {
 function loadCountry(countryCode, currentPage) {
   document.getElementById('gallery').innerHTML = '';
   currentPage = currentPage || 0; // Establece currentPage en 0 si no se proporciona un valor
-  eventsApi
-    .getByCountry(countryCode, currentPage)
+
+  getEvents(currentPage, { countryCode })
     .then(result => {
       const data =
         result._embedded && result._embedded.events
@@ -246,8 +245,7 @@ function loadCountry(countryCode, currentPage) {
 function loadEvents(keyword, countryCode, currentPage) {
   document.getElementById('gallery').innerHTML = '';
   currentPage = currentPage || 0; // Establece currentPage en 0 si no se proporciona un valor
-  eventsApi
-    .getByKeyAndCountry(keyword, countryCode, currentPage)
+  getEvents(currentPage, { keyword, countryCode })
     .then(result => {
       const data =
         result._embedded && result._embedded.events
