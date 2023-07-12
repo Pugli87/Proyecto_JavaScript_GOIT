@@ -301,3 +301,4 @@ chooseInput.addEventListener('change', () => {
 });
 
 loadEvents('eagles', 'US', 0); // primer cargado de eventos de la pagina
+
