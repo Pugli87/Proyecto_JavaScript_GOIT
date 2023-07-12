@@ -276,3 +276,4 @@ chooseInput.addEventListener('change', () => {
 
 // Primer cargado de eventos de la pagina
 loadEvents('eagles', 'US', 0);
+
