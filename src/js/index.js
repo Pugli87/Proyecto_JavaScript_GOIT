@@ -2,6 +2,8 @@ import getEvents from './eventsApi';
 import Notiflix from 'notiflix';
 Notiflix.Notify.init();
 
+import * as basicLightbox from 'basiclightbox'
+
 const form = document.getElementById('search-form');
 let chooseInput = document.getElementById('choose');
 let searchInput = document.getElementById('search');
@@ -166,6 +168,7 @@ function renderEvents(item) {
   const imageElement = listItem.querySelector('.gallery__img');
   imageElement.addEventListener('click', () => {
     openModal(imageElement.getAttribute('src'));
+    console.log("clic");
   });
   /* cerrar modal */
   document.addEventListener('keydown', e => {
@@ -287,7 +290,7 @@ chooseInput.addEventListener('change', () => {
 // Primer cargado de eventos de la pagina
 loadEvents('eagles', 'US', 0);
 
-function openModal(imageUrl, attractions, eventName, eventDate, eventCity) {
+function openModal(imageUrl, attractions, eventName, eventCity) {
   const modal = basicLightbox.create(`
     <div class="modal">
       <div class="modal__1">
@@ -300,7 +303,7 @@ function openModal(imageUrl, attractions, eventName, eventDate, eventCity) {
           <div class="modal__info">
           <p class="modal__name"><span class="modal__name-1">INFO<br></span>${attractions}</p>
           <p class="modal__name"><span class="modal__name-1">WHO<br></span>${eventName}</p>
-          <p class="modal__name"><span class="modal__name-1-when">WHEN<br></span>${eventDate}<span class="modal__hour">${eventDate.hour}</span><br></p>
+          <p class="modal__name"><span class="modal__name-1-when">WHEN<br></span><span class="modal__hour"></span><br></p>
           <p class="modal__name"><span class="modal__name-1">WHERE<br></span>${eventCity}</p>
           <p class="modal__name"><span class="modal__name-1">PRICES<br></span>0000</p>
           <button class="modal__button" onclick="window.open('https://www.ticketmaster.com/}')">Buy Tickets</button>
@@ -309,4 +312,5 @@ function openModal(imageUrl, attractions, eventName, eventDate, eventCity) {
   `);
   modal.show();
 }
+
 
