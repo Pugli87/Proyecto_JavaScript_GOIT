@@ -2,13 +2,13 @@ let t,e;function i(t){return t&&t.__esModule?t.default:t}var a="undefined"!=type
     <a href="#" class="gallery__link">
       <img class="gallery__img" src="${e}" alt=""> 
     </a>
-    <span class="gallery__name">${a}</span> <br/>
-    <span class="gallery__date">${t.dates.start.localDate}</span> <br/>
-    <span class="gallery__city">
+    <h3 class="gallery__name">${a}</h3> 
+    <p class="gallery__date">${t.dates.start.localDate}</p> 
+    <p class="gallery__city">
       <svg width="6" height="9" viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 0C1.34581 0 0 1.40339 0 3.12836C0 5.29645 3.00295 9 3.00295 9C3.00295 9 6 5.18983 6 3.12836C6 1.40339 4.65424 0 3 0ZM3.90516 4.04434C3.65558 4.30455 3.32781 4.43469 3 4.43469C2.67224 4.43469 2.34437 4.30455 2.09489 4.04434C1.59577 3.52392 1.59577 2.67709 2.09489 2.15662C2.33658 1.90448 2.65807 1.76561 3 1.76561C3.34193 1.76561 3.66337 1.90453 3.90516 2.15662C4.40428 2.67709 4.40428 3.52392 3.90516 4.04434Z" fill="white"/>
       </svg>
       ${i}
-    </span> <br/>
+    </p>
   `,n}function g(t,e){document.getElementById("gallery").innerHTML="",n(e,{keyword:t}).then(t=>{t.page.totalElements?(0,t._embedded.events).forEach(t=>{let e=u(t);gallery.appendChild(e)}):(document.getElementById("gallery"),i(o).Notify.warning("No se encontraron eventos disponibles")),m=t.page,d()}).catch(t=>{console.error(t)})}function b(t,e){document.getElementById("gallery").innerHTML="",n(e=e||0,{countryCode:t}).then(t=>{let e=t._embedded&&t._embedded.events?t._embedded.events:[],a=document.getElementById("gallery");a.innerHTML="",0===e.length?(i(o).Notify.warning("No hay eventos en tu pa\xeds"),f.innerHTML=""):(e.forEach(t=>{let e=u(t);a.appendChild(e)}),m=t.page,d())}).catch(t=>{console.error(t)})}function y(t,e,a){document.getElementById("gallery").innerHTML="",n(a=a||0,{keyword:t,countryCode:e}).then(t=>{let e=t._embedded&&t._embedded.events?t._embedded.events:[];0===e.length?i(o).Notify.warning("No hay eventos para el artista en tu Pa\xeds"):(e.forEach(t=>{let e=u(t);gallery.appendChild(e)}),m=t.page,d())}).catch(t=>{console.error(t)})}r.addEventListener("submit",t=>{t.preventDefault(),p()&&(c=0,""!==s.value&&""!==l.value?y(l.value,s.value):""!==s.value&&""===l.value?b(s.value):""===s.value&&""!==l.value&&g(l.value))}),s.addEventListener("change",()=>{p()&&(""!==s.value&&""!==l.value?y(l.value,s.value):""!==s.value&&""===l.value?b(s.value):""===s.value&&""!==l.value&&g(l.value))}),y("eagles","US",0);
-//# sourceMappingURL=index.c7aa5950.js.map
+//# sourceMappingURL=index.8a11934d.js.map
