@@ -174,34 +174,32 @@
 
 @media (min-width: 1280px) {
   .header {
-    width: 100%;
+    min-width: 1280px;
     height: 446px;
     background-image: url('/src/images/header_desk.png');
 
     &__wrapper {
       &--2 {
-        margin-top: -60px;
+        margin-top: -80px;
       }
     }
+
     &__logo {
       scale: 200%;
       margin-left: 5%;
-      margin-top: 40px;
     }
 
     &__h1 {
-      margin-top: 8px;
-      scale: 260%;
-      margin-bottom: 5%;
+      width: 589px;
+      height: 122px;
+      font-size: 50px;
+      line-height: 60.95px;
+      margin-bottom: 52px;
     }
 
     .form {
       flex-direction: row;
       justify-content: center;
-
-      &:not(:last-child) {
-        margin-top: 52px;
-      }
 
       &__cont {
         margin: 0;
