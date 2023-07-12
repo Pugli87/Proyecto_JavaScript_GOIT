@@ -1,5 +1,5 @@
 const API_KEY = 'xtboiYIsAyoQG85vMxNOToDrUrhqLhlf';
-const BASE_URL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${API_KEY}&size=16&includeTBA=no&includeTBD=no&sort=random`;
+const BASE_URL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${API_KEY}&size=12`;
 
 async function getEvents(page = 0, options) {
   try {

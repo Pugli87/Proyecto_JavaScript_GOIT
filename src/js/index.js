@@ -1,22 +1,17 @@
 import getEvents from './eventsApi';
-
-/* notiflix */
 import Notiflix from 'notiflix';
 Notiflix.Notify.init();
 
-// hago una referencia al elemento del formulario y al campo de entrada
 const form = document.getElementById('search-form');
 let chooseInput = document.getElementById('choose');
 let searchInput = document.getElementById('search');
 
-//document.querySelector('#choose').value;
 let data = [];
 let currentPage = 0;
 let pagination = {};
-let keyword = ''; // Variable global para almacenar la palabra clave de búsqueda
-let countryCode; // Variable global para almacenar el pais para búsqueda
+let keyword = undefined;
+let countryCode = undefined;
 const paginationBox = document.getElementById('pages');
-console.log(countryCode);
 
 function validaForm() {
   const chooseValue = chooseInput.value;
@@ -31,10 +26,6 @@ function validaForm() {
 
   return true;
 }
-
-/* ===================================================================================== */
-/* -------------- Estas dos funciones son para la paginacion de la pagina -------------- */
-/* ===================================================================================== */
 
 function renderPagination() {
   if (pagination.totalPages !== undefined && pagination.totalElements > 0) {
@@ -107,7 +98,6 @@ function addPaginationButton(pageNumber) {
 
       renderPagination();
       window.scrollTo(0, 0);
-      console.log(`Botón ${selectedPage} seleccionado`);
       keyword = document.querySelector('#search').value;
       countryCode = chooseInput.value;
 
@@ -148,10 +138,6 @@ function addPaginationButton(pageNumber) {
   page.classList.add('footer__page');
 }
 
-/* ===================================================================================== */
-/* ===================== funcion para dibujar el html en la pagina ===================== */
-/* ===================================================================================== */
-
 function renderEvents(item) {
   const imageUrl = item?.images.filter(item => item.width > 600)[0].url;
   const venueCity =
@@ -180,10 +166,6 @@ function renderEvents(item) {
   return listItem;
 }
 
-/* ======================================================================================*/
-/*--- aca cargamos data o elementos desde el boton buscar con una palab ra de busqueda --*/
-/* ======================================================================================*/
-
 function loadData(keyword, currentPage) {
   document.getElementById('gallery').innerHTML = '';
   getEvents(currentPage, { keyword })
@@ -207,10 +189,6 @@ function loadData(keyword, currentPage) {
       console.error(error);
     });
 }
-
-/* ====================================================================================== */
-/* ------------------ le hago pruebas a eventos llamados por country -------------------- */
-/* ====================================================================================== */
 
 function loadCountry(countryCode, currentPage) {
   document.getElementById('gallery').innerHTML = '';
@@ -242,10 +220,6 @@ function loadCountry(countryCode, currentPage) {
       console.error(error);
     });
 }
-
-/* ======================================================================================*/
-/*--- aca cargamos data o elementos desde el boton buscar con una palab ra de busqueda --*/
-/* ======================================================================================*/
 
 function loadEvents(keyword, countryCode, currentPage) {
   document.getElementById('gallery').innerHTML = '';
@@ -300,5 +274,6 @@ chooseInput.addEventListener('change', () => {
   }
 });
 
-loadEvents('eagles', 'US', 0); // primer cargado de eventos de la pagina
+// Primer cargado de eventos de la pagina
+loadEvents('eagles', 'US', 0);
 
