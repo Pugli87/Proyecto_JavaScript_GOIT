@@ -102,7 +102,7 @@ function addPaginationButton(pageNumber) {
       countryCode = chooseInput.value;
 
       if (!searchInput.value && !chooseInput.value) {
-        loadData('US', currentPage);
+        loadEvents('eagles', 'US', currentPage);
       }
       if (searchInput.value && !chooseInput.value) {
         loadData(keyword, currentPage);
@@ -275,4 +275,4 @@ chooseInput.addEventListener('change', () => {
 });
 
 // Primer cargado de eventos de la pagina
-loadEvents('eagles', 'US', 0);
+loadEvents('eagles', 'US', currentPage);
