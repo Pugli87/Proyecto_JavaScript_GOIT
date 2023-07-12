@@ -45,13 +45,13 @@ function renderPagination() {
 
     paginationBox.innerHTML = ''; // Vacía el contenido del contenedor antes de agregar los nuevos botones
 
-    addPaginationButton('<');
+    addPaginationButton('1');
 
     if (startPage > 1) {
       addPaginationButton('...');
     }
 
-    for (let i = startPage; i <= endPage; i++) {
+    for (let i = startPage + 1; i <= endPage; i++) {
       addPaginationButton(i);
     }
 
@@ -72,7 +72,7 @@ function addPaginationButton(pageNumber) {
       : document.createElement('button');
   page.textContent = pageNumber;
 
-  if (pageNumber === '<') {
+  if (pageNumber === '1') {
     page.setAttribute('data-page', 'prev');
   } else if (pageNumber === '>') {
     page.setAttribute('data-page', 'next');
