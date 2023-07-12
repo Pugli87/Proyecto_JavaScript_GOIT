@@ -323,4 +323,4 @@ chooseInput.addEventListener('change', () => {
   }
 });
 
-loadData('US', 0); // primer cargado de eventos de la pagina
+loadCountry('US', 0); // primer cargado de eventos de la pagina
