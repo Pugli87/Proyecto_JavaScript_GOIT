@@ -163,6 +163,16 @@ function renderEvents(item) {
       ${venueCity}
     </span> <br/>
   `;
+  const imageElement = listItem.querySelector('.gallery__img');
+  imageElement.addEventListener('click', () => {
+    openModal(imageElement.getAttribute('src'));
+  });
+  /* cerrar modal */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      modal.close();
+    }
+  });
   return listItem;
 }
 
@@ -276,4 +286,27 @@ chooseInput.addEventListener('change', () => {
 
 // Primer cargado de eventos de la pagina
 loadEvents('eagles', 'US', 0);
+
+function openModal(imageUrl, attractions, eventName, eventDate, eventCity) {
+  const modal = basicLightbox.create(`
+    <div class="modal">
+      <div class="modal__1">
+        <img class="modal__img-c" src="${imageUrl}" alt=""/>
+      </div
+        <div class="modal__2">
+          <img class="modal__img" src="${imageUrl}" alt=""/>
+        </div>
+        <div class="modal__3">
+          <div class="modal__info">
+          <p class="modal__name"><span class="modal__name-1">INFO<br></span>${attractions}</p>
+          <p class="modal__name"><span class="modal__name-1">WHO<br></span>${eventName}</p>
+          <p class="modal__name"><span class="modal__name-1-when">WHEN<br></span>${eventDate}<span class="modal__hour">${eventDate.hour}</span><br></p>
+          <p class="modal__name"><span class="modal__name-1">WHERE<br></span>${eventCity}</p>
+          <p class="modal__name"><span class="modal__name-1">PRICES<br></span>0000</p>
+          <button class="modal__button" onclick="window.open('https://www.ticketmaster.com/}')">Buy Tickets</button>
+        </div>
+    </div
+  `);
+  modal.show();
+}
 
