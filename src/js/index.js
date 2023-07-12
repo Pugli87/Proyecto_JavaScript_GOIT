@@ -290,25 +290,29 @@ chooseInput.addEventListener('change', () => {
 // Primer cargado de eventos de la pagina
 loadEvents('eagles', 'US', 0);
 
-function openModal(imageUrl, attractions, eventName, eventCity) {
+function openModal(imageUrl, attractions, eventName, eventDate, eventCity) {
   const modal = basicLightbox.create(`
-    <div class="modal">
-      <div class="modal__1">
-        <img class="modal__img-c" src="${imageUrl}" alt=""/>
-      </div
-        <div class="modal__2">
-          <img class="modal__img" src="${imageUrl}" alt=""/>
-        </div>
-        <div class="modal__3">
-          <div class="modal__info">
-          <p class="modal__name"><span class="modal__name-1">INFO<br></span>${attractions}</p>
-          <p class="modal__name"><span class="modal__name-1">WHO<br></span>${eventName}</p>
-          <p class="modal__name"><span class="modal__name-1-when">WHEN<br></span><span class="modal__hour"></span><br></p>
-          <p class="modal__name"><span class="modal__name-1">WHERE<br></span>${eventCity}</p>
-          <p class="modal__name"><span class="modal__name-1">PRICES<br></span>0000</p>
-          <button class="modal__button" onclick="window.open('https://www.ticketmaster.com/}')">Buy Tickets</button>
-        </div>
-    </div
+  
+  <div class="modal">
+
+    <div class="modal__cont modal__cont--img-cicle">
+      <img src="${imageUrl}" alt="event" class="modal__img modal__img--circle">
+    </div>
+
+    <div class="modal__cont ">
+      <a href="${imageUrl}" class="modal__link">
+        <img class="modal__img modal__img--big" src="${imageUrl}" alt=""/>
+      </a>
+      <ul class="modal__list">
+        <li class="modal__item modal__item--info"><span>INFO</span>${attractions}</li>
+        <li class="modal__item modal__item--when"><span>WHO</span>${eventName}</li>
+        
+        <li class="modal__item modal__item--who"><span>WHERE</span>${eventCity}</li>
+      </ul>
+      <button class="modal__btn" onclick="window.open('https://www.ticketmaster.com/')">Buy Tickets</button>
+    </div>
+    <div class="modal__cont"><button class="modal__btn--more">MORE ABOUT THIS EVENT</div>
+  </div>
   `);
   modal.show();
 }
