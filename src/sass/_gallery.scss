@@ -88,12 +88,12 @@
 @media (min-width: 768px) {
   .gallery {
     width: 610px;
-    /*&__target {
-      // gap: 13px;
-    }*/
+    &__target {
+      gap: 13px;
+    }
 
     &__item {
-      flex-basis: calc((100% - 60px) / 3);
+      flex-basis: calc((100% - 26px) / 3);
 
       &::after {
         top: 0;
@@ -108,9 +108,11 @@
     &__img {
       width: 180px;
       height: 227px;
-      margin-bottom: 5px;
+      //margin-bottom: 5px;
     }
     &__name {
+      width: auto;
+      margin-top: 5px;
       font-size: 14px;
       line-height: 19.5px;
     }
