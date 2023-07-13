@@ -81,6 +81,18 @@
     font-size: 10px;
     text-transform: uppercase;
   }
+  &__noevents {
+    color: rgba(220, 86, 197, 1);
+    border: none;
+    cursor: pointer;
+    padding: 5px 20px;
+    border-radius: 50px 0 50px 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    &:hover {
+      border: 1px solid rgba(220, 86, 197, 0.3);
+      box-shadow: 0 0 5px 1px rgba(220, 86, 197, 1);
+    }
+  }
 }
 
 /* agregue estilos a tablet y desktop (mobile se modifico solo el espacio entre imagenes) */
@@ -125,34 +137,35 @@
       line-height: 19.5px;
     }
   }
-  @media (min-width: 1280px) {
-    .gallery {
-      width: 946px;
-      &__target {
-        gap: 56px;
+}
+
+@media (min-width: 1280px) {
+  .gallery {
+    width: 946px;
+    &__target {
+      gap: 56px;
+    }
+    &__item {
+      flex-basis: calc((100% - 168px) / 4);
+      &:not(:last-child) {
+        margin-bottom: 0px;
       }
-      &__item {
-        flex-basis: calc((100% - 168px) / 4);
-        &:not(:last-child) {
-          margin-bottom: 0px;
-        }
-      }
-      &__img {
-        height: 227px;
-        margin-bottom: 5px;
-      }
-      &__name {
-        font-size: 16px;
-        line-height: 19.5px;
-      }
-      &__date {
-        font-size: 16px;
-        line-height: 19.5px;
-      }
-      &__city {
-        font-size: 14px;
-        line-height: 19.5px;
-      }
+    }
+    &__img {
+      height: 227px;
+      margin-bottom: 5px;
+    }
+    &__name {
+      font-size: 16px;
+      line-height: 19.5px;
+    }
+    &__date {
+      font-size: 16px;
+      line-height: 19.5px;
+    }
+    &__city {
+      font-size: 14px;
+      line-height: 19.5px;
     }
   }
 }
