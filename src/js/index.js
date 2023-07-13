@@ -21,6 +21,7 @@ function validaForm() {
     Notiflix.Notify.warning(
       'Por favor, completa alguno de los campos del formulario.'
     );
+    loadData({ keyword: 'eagles', countryCode: 'US', currentPage });
     return false;
   }
 
@@ -94,24 +95,25 @@ function addPaginationButton(pageNumber) {
         }
       } else {
         currentPage = parseInt(selectedPage) - 1;
+        console.log(page, 'pageNumber', pageNumber, currentPage);
       }
 
       renderPagination();
-      window.scrollTo(0, 0);
+      //window.scrollTo(0, 0);
       keyword = document.querySelector('#search').value;
       countryCode = chooseInput.value;
 
       if (!searchInput.value && !chooseInput.value) {
-        loadEvents('eagles', 'US', currentPage);
+        loadData({ keyword: 'eagles', countryCode: 'US', currentPage });
       }
       if (searchInput.value && !chooseInput.value) {
-        loadData(keyword, currentPage);
+        loadData({ keyword: keyword, currentPage });
       }
       if (!searchInput.value && chooseInput.value) {
-        loadCountry(countryCode, currentPage);
+        loadData({ countryCode: countryCode, currentPage });
       }
       if (searchInput.value && chooseInput.value) {
-        loadEvents(keyword, countryCode, currentPage);
+        loadData({ keyword: keyword, countryCode: countryCode, currentPage });
       }
     });
   } else {
@@ -121,11 +123,11 @@ function addPaginationButton(pageNumber) {
   if (currentPage === pageNumber - 1) {
     page.classList.add('active');
   }
-
+  /*
   if (pageNumber === '<' && currentPage === 0) {
     page.disabled = true;
   }
-
+*/
   // Deshabilitar el botón "Siguiente" cuando se alcanza la última página
   if (
     pageNumber === '>' &&
@@ -166,73 +168,34 @@ function renderEvents(item) {
   return listItem;
 }
 
-function loadData(keyword, currentPage) {
+function loadData(options) {
   document.getElementById('gallery').innerHTML = '';
-  getEvents(currentPage, { keyword })
-    .then(result => {
-      if (result.page.totalElements) {
-        data = result._embedded.events;
-        data.forEach(item => {
-          const listItem = renderEvents(item);
-          gallery.appendChild(listItem);
-        });
-      } else {
-        const gallery = document.getElementById('gallery');
-        // gallery.innerHTML = '<p>No hay eventos disponibles</p>'; // Muestra un mensaje indicando que no hay eventos
-        Notiflix.Notify.warning('No se encontraron eventos disponibles');
-      }
-
-      pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
-      renderPagination(); // Actualiza los botones de paginación
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
-
-function loadCountry(countryCode, currentPage) {
-  document.getElementById('gallery').innerHTML = '';
-  currentPage = currentPage || 0; // Establece currentPage en 0 si no se proporciona un valor
-
-  getEvents(currentPage, { countryCode })
+  getEvents(currentPage, options)
     .then(result => {
       const data =
         result._embedded && result._embedded.events
           ? result._embedded.events
           : [];
-      const gallery = document.getElementById('gallery');
-      gallery.innerHTML = ''; // Limpia el contenido existente antes de agregar los nuevos elementos
 
       if (data.length === 0) {
-        Notiflix.Notify.warning('No hay eventos en tu país');
+        /* ======================================================================== */
+        /* ====================== si no hay eventos por pais ====================== */
+        /* ======================================================================== */
+        console.log(
+          'no hay eventos en: ',
+          chooseInput.options[chooseInput.selectedIndex].textContent
+        ); // texto del pais de busqueda
+        Notiflix.Notify.warning('No hay eventos disponibles');
         paginationBox.innerHTML = ''; // Vacía el contenido del contenedor de paginación
-      } else {
-        data.forEach(item => {
-          const listItem = renderEvents(item);
-          gallery.appendChild(listItem);
+        const reloadButton = document.createElement('button');
+        reloadButton.textContent = 'Recargar';
+
+        reloadButton.addEventListener('click', () => {
+          location.reload(); // Recarga la página actual
         });
 
-        pagination = result.page; // Actualiza el objeto pagination con los nuevos datos de paginación
-        renderPagination(); // Actualiza los botones de paginación
-      }
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
-
-function loadEvents(keyword, countryCode, currentPage) {
-  document.getElementById('gallery').innerHTML = '';
-  currentPage = currentPage || 0; // Establece currentPage en 0 si no se proporciona un valor
-  getEvents(currentPage, { keyword, countryCode })
-    .then(result => {
-      const data =
-        result._embedded && result._embedded.events
-          ? result._embedded.events
-          : [];
-
-      if (data.length === 0) {
-        Notiflix.Notify.warning('No hay eventos para el artista en tu País');
+        paginationBox.appendChild(reloadButton);
+        reloadButton.classList.add('gallery__noevents');
       } else {
         data.forEach(item => {
           const listItem = renderEvents(item);
@@ -252,27 +215,25 @@ form.addEventListener('submit', e => {
   e.preventDefault(); // Evitar que el formulario se envíe automáticamente
   if (validaForm()) {
     currentPage = 0; // Restablecer currentPage a 0
-    if (chooseInput.value !== '' && searchInput.value !== '') {
-      loadEvents(searchInput.value, chooseInput.value);
-    } else if (chooseInput.value !== '' && searchInput.value === '') {
-      loadCountry(chooseInput.value);
-    } else if (chooseInput.value === '' && searchInput.value !== '') {
-      loadData(searchInput.value);
-    }
+    const options = {
+      keyword: searchInput.value,
+      countryCode: chooseInput.value,
+    };
+    loadData(options);
   }
 });
 
 chooseInput.addEventListener('change', () => {
   if (validaForm()) {
-    if (chooseInput.value !== '' && searchInput.value !== '') {
-      loadEvents(searchInput.value, chooseInput.value);
-    } else if (chooseInput.value !== '' && searchInput.value === '') {
-      loadCountry(chooseInput.value);
-    } else if (chooseInput.value === '' && searchInput.value !== '') {
-      loadData(searchInput.value);
-    }
+    currentPage = 0; // Restablecer currentPage a 0
+    const options = {
+      keyword: searchInput.value,
+      countryCode: chooseInput.value,
+    };
+    loadData(options);
   }
 });
 
 // Primer cargado de eventos de la pagina
-loadEvents('eagles', 'US', currentPage);
+const initialOptions = { keyword: 'eagles', countryCode: 'US' };
+loadData(initialOptions);
