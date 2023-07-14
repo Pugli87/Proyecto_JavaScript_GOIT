@@ -2,11 +2,18 @@ import getEvents from './eventsApi';
 import Notiflix from 'notiflix';
 Notiflix.Notify.init();
 
+/* ========================================================================== */
+/* ======================= Implementacion modal judit ======================= */
+/* ========================================================================== */
+
+import * as basicLightbox from 'basiclightbox';
+
 const form = document.getElementById('search-form');
 let chooseInput = document.getElementById('choose');
 let searchInput = document.getElementById('search');
 
 let data = [];
+let modal;
 let currentPage = 0;
 let pagination = {};
 let keyword = undefined;
@@ -165,6 +172,28 @@ function renderEvents(item) {
       ${venueCity}
     </p>
   `;
+
+  /* ========================================================================== */
+  /* ======================= Implementacion modal judit ======================= */
+  /* ========================================================================== */
+  const imageElement = listItem.querySelector('.gallery__img');
+  imageElement.addEventListener('click', () => {
+    const imageUrl = imageElement.getAttribute('src');
+    const attractions = '...'; // Agrega el valor correspondiente para attractions
+    const eventName = '...'; // Agrega el valor correspondiente para eventName
+    const eventDate = item.dates.start; // Agrega el valor correspondiente para eventDate
+    const eventCity = '...'; // Agrega el valor correspondiente para eventCity
+    openModal(imageUrl, attractions, eventName, eventDate, eventCity);
+    console.log(item.dates.start.startDateTime);
+    console.log(item.id);
+  });
+
+  /* cerrar modal */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      modal.close();
+    }
+  });
   return listItem;
 }
 
@@ -237,3 +266,36 @@ chooseInput.addEventListener('change', () => {
 // Primer cargado de eventos de la pagina
 const initialOptions = { keyword: 'eagles', countryCode: 'US' };
 loadData(initialOptions);
+
+/* ========================================================================== */
+/* ======================= Implementacion modal judit ======================= */
+/* ========================================================================== */
+
+function openModal(imageUrl, attractions, eventName, eventDate, eventCity) {
+  modal = basicLightbox.create(`
+  
+  <div class="modal">
+
+    <div class="modal__cont modal__cont--img-cicle">
+      <img src="${imageUrl}" alt="event" class="modal__img modal__img--circle">
+    </div>
+
+    <div class="modal__cont ">
+      <a href="${imageUrl}" class="modal__link">
+        <img class="modal__img modal__img--big" src="${imageUrl}" alt=""/>
+      </a>
+      <ul class="modal__list">
+        <li class="modal__item modal__item--info"><h3>INFO</h3>${attractions}</li>
+        <li class="modal__item modal__item--when"><h3>WHEN</h3>${eventDate}</li>
+        <li class="modal__item modal__item--where"><h3>WHERE</h3>${eventCity}</li>
+        <li class="modal__item modal__item--who"><h3>WHO</h3>${eventName}</li>
+        <li class="modal__item modal__item--price"><h3>PRICES</h3>${eventName}</li>
+        
+      </ul>
+      <button class="modal__btn" onclick="window.open('https://www.ticketmaster.com/')">Buy Tickets</button>
+    </div>
+    <div class="modal__cont"><button class="modal__btn--more">MORE ABOUT THIS EVENT</div>
+  </div>
+  `);
+  modal.show();
+}
