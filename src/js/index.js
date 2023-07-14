@@ -281,20 +281,22 @@ function openModal(imageUrl, attractions, eventName, eventDate, eventCity) {
     </div>
 
     <div class="modal__cont ">
-      <a href="${imageUrl}" class="modal__link">
-        <img class="modal__img modal__img--big" src="${imageUrl}" alt=""/>
-      </a>
-      <ul class="modal__list">
-        <li class="modal__item modal__item--info"><h3>INFO</h3>${attractions}</li>
-        <li class="modal__item modal__item--when"><h3>WHEN</h3>${eventDate}</li>
-        <li class="modal__item modal__item--where"><h3>WHERE</h3>${eventCity}</li>
-        <li class="modal__item modal__item--who"><h3>WHO</h3>${eventName}</li>
-        <li class="modal__item modal__item--price"><h3>PRICES</h3>${eventName}</li>
-        
-      </ul>
-      <button class="modal__btn" onclick="window.open('https://www.ticketmaster.com/')">Buy Tickets</button>
+      <div class="modal__wrapper ">
+        <a href="${imageUrl}" class="modal__link">
+          <img class="modal__img modal__img--big" src="${imageUrl}" alt=""/>
+        </a>
+        <ul class="modal__list">
+          <li class="modal__item modal__item--info"><h3>INFO</h3>${attractions}</li>
+          <li class="modal__item modal__item--when"><h3>WHEN</h3>${eventDate}</li>
+          <li class="modal__item modal__item--where"><h3>WHERE</h3>${eventCity}</li>
+          <li class="modal__item modal__item--who"><h3>WHO</h3>${eventName}</li>
+          <li class="modal__item modal__item--price"><h3>PRICES</h3>${eventName}</li>
+          <button class="modal__btn" onclick="window.open('https://www.ticketmaster.com/')">Buy Tickets</button>
+          <button class="modal__btn" onclick="window.open('https://www.ticketmaster.com/')">Buy Tickets</button>
+        </ul>
+      </div>
     </div>
-    <div class="modal__cont"><button class="modal__btn--more">MORE ABOUT THIS EVENT</div>
+    <div class="modal__cont"><button class="modal__btn-more">MORE ABOUT THIS EVENT</div>
   </div>
   `);
   modal.show();
