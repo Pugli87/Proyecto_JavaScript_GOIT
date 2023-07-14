@@ -19,20 +19,22 @@ let t,e,i;function a(t){return t&&t.__esModule?t.default:t}var n="undefined"!=ty
     </div>
 
     <div class="modal__cont ">
-      <a href="${e}" class="modal__link">
-        <img class="modal__img modal__img--big" src="${e}" alt=""/>
-      </a>
-      <ul class="modal__list">
-        <li class="modal__item modal__item--info"><h3>INFO</h3>...</li>
-        <li class="modal__item modal__item--when"><h3>WHEN</h3>${n}</li>
-        <li class="modal__item modal__item--where"><h3>WHERE</h3>...</li>
-        <li class="modal__item modal__item--who"><h3>WHO</h3>${a}</li>
-        <li class="modal__item modal__item--price"><h3>PRICES</h3>${a}</li>
-        
-      </ul>
-      <button class="modal__btn" onclick="window.open('https://www.ticketmaster.com/')">Buy Tickets</button>
+      <div class="modal__wrapper ">
+        <a href="${e}" class="modal__link">
+          <img class="modal__img modal__img--big" src="${e}" alt=""/>
+        </a>
+        <ul class="modal__list">
+          <li class="modal__item modal__item--info"><h3>INFO</h3>...</li>
+          <li class="modal__item modal__item--when"><h3>WHEN</h3>${n}</li>
+          <li class="modal__item modal__item--where"><h3>WHERE</h3>...</li>
+          <li class="modal__item modal__item--who"><h3>WHO</h3>${a}</li>
+          <li class="modal__item modal__item--price"><h3>PRICES</h3>${a}</li>
+          <button class="modal__btn" onclick="window.open('https://www.ticketmaster.com/')">Buy Tickets</button>
+          <button class="modal__btn" onclick="window.open('https://www.ticketmaster.com/')">Buy Tickets</button>
+        </ul>
+      </div>
     </div>
-    <div class="modal__cont"><button class="modal__btn--more">MORE ABOUT THIS EVENT</div>
+    <div class="modal__cont"><button class="modal__btn-more">MORE ABOUT THIS EVENT</div>
   </div>
   `)).show()})(i,0,"...",a,0),console.log(e.dates.start.startDateTime),console.log(e.id)}),document.addEventListener("keydown",e=>{"Escape"===e.key&&t.close()}),o}(e);gallery.appendChild(i)}),p=e.page,u()}).catch(t=>{console.error(t)})}l.addEventListener("submit",t=>{if(t.preventDefault(),x()){f=0;let t={keyword:m.value,countryCode:c.value};b(t)}}),c.addEventListener("change",()=>{if(x()){f=0;let t={keyword:m.value,countryCode:c.value};b(t)}}),b({keyword:"eagles",countryCode:"US"});
-//# sourceMappingURL=index.6559c953.js.map
+//# sourceMappingURL=index.4736798e.js.map
